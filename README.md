@@ -4,15 +4,15 @@ ENG:
 Project idea is to make in java Discord game bot, there will be different level as different type of games.
 
 GAME ONE:
-
+*
 creator --
 
 GAME TWO:
-
+*
 creator --
 
 GAME THREE:
-
+*
 creator --
 
 
