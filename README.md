@@ -1,3 +1,3 @@
-# PendulumSimulation
+#  Game bot
 
 !:
