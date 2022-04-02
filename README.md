@@ -26,3 +26,7 @@ Projekti idee on teha java Discord mängu bott, seal on erinevat mängitavad mä
 Juhendmaterjalid:
 https://medium.com/discord-bots/making-a-basic-discord-bot-with-java-834949008c2b
 https://youtu.be/jGrD8AZfTig
+
+
+lisad:
+https://ci.dv8tion.net/job/JDA5/
