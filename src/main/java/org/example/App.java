@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 
 /**
- * JavaFX App
+ * JavaFX App i guess?
  */
 public class App extends Application {
 
