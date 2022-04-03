@@ -7,11 +7,14 @@ import net.dv8tion.jda.api.JDABuilder;
 import javax.security.auth.login.LoginException;
 
 public class Noel {
-  public static JDA jda;
+  private JDA jda;
 
-  //Main method
-  public static void main(String[] args) throws LoginException {
-    //ehitab uue Boti -- Token tuleb ise lisada
-    jda = new JDABuilder(AccountType.BOT).setToken("").buildAsync();
+  /**
+   * Boti konstruktor
+   * @param token
+   */
+  public Noel(String token) {
+    this.jda = new JDABuilder(AccountType.BOT).setToken(token).buildAsync();
   }
+
 }
