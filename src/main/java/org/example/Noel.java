@@ -6,6 +6,10 @@ import net.dv8tion.jda.api.JDABuilder;
 
 import javax.security.auth.login.LoginException;
 
+/**
+ * Boti loomis objekt, loob boti selle tokeniga.
+ * Siin saab edasi muuta seda
+ */
 public class Noel {
   private JDA jda;
 
