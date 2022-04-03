@@ -5,15 +5,15 @@ Project idea is to make in java Discord game bot, there will be different level 
 
 GAME ONE:
 *
-creator --
+creator -- Mihkel Hani 
 
 GAME TWO:
 *
-creator --
+creator -- Mia Marta Heikla
 
 GAME THREE:
 *
-creator --
+creator -- Ott Eric Ottender
 
 
 Guidance materials:
@@ -30,3 +30,10 @@ https://youtu.be/jGrD8AZfTig
 
 lisad:
 https://ci.dv8tion.net/job/JDA5/
+
+
+lisa discort boti jaoks on JDA module pack: 
+https://github.com/DV8FromTheWorld/JDA
+
+BOTI NAME:
+Noël Dorthe
