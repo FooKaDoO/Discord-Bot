@@ -12,6 +12,11 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 
+    /**
+     * Maven/Javafx, idk main meetod pmst
+     * Saaksime teha javafx control paneliga boti?
+     * @param stage
+     */
     @Override
     public void start(Stage stage) {
         var javaVersion = SystemInfo.javaVersion();
@@ -26,6 +31,10 @@ public class App extends Application {
         stage.show();
     }
 
+    /**
+     * Käivitamine
+     * @param args
+     */
     public static void main(String[] args) {
         launch();
     }
