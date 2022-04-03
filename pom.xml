@@ -27,12 +27,13 @@
             <artifactId>maven-compiler-plugin</artifactId>
             <version>3.10.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/net.dv8tion/JDA -->
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>4.4.0_352</version>
-            <scope>compile</scope>
+            <version>4.2.0_247</version>
         </dependency>
+
 
     </dependencies>
     <build>
