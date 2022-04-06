@@ -18,7 +18,7 @@ public class Noel {
    * @param token
    */
   public Noel(String token) {
-    this.jda = new JDABuilder(AccountType.BOT).setToken(token).buildAsync();
+    //this.jda = new JDABuilder(AccountType.BOT).setToken(token).buildAsync();
   }
 
 }

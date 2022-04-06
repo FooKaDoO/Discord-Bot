@@ -15,7 +15,8 @@ public class Main  {
   //Main method
   public static void main(String[] args) throws LoginException {
     //ehitab uue Boti -- Token tuleb ise lisada
-    jda = new JDABuilder(AccountType.BOT).setToken("").buildAsync();
+    JDA jda= JDABuilder.createDefault("").build();
+
 
   jda.getPresence().setStatus(OnlineStatus.IDLE);
   //jda.getPresence().setGame(Game.watching("hi!"));
