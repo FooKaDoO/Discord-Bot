@@ -5,9 +5,13 @@
     <!--  that they should prefer consuming it instead.  -->
     <!--  do_not_remove: published-with-gradle-metadata  -->
     <modelVersion>4.0.0</modelVersion>
-    <groupId>net.dv8tion</groupId>
-    <artifactId>JDA</artifactId>
-    <version>5.0.0-alpha.9</version>
+    <groupId>ee.ut.oop</groupId>
+    <artifactId>discordbot</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
     <name>JDA</name>
     <description>Java wrapper for the popular chat VOIP service: Discord https://discord.com</description>
     <url>https://github.com/DV8FromTheWorld/JDA</url>
@@ -36,6 +40,12 @@
         <url>https://github.com/DV8FromTheWorld/JDA</url>
     </scm>
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/net.dv8tion/JDA -->
+        <dependency>
+            <groupId>net.dv8tion</groupId>
+            <artifactId>JDA</artifactId>
+            <version>5.0.0-alpha.9</version>
+        </dependency>
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>

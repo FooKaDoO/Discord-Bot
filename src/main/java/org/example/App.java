@@ -1,5 +1,5 @@
-package org.example;
-
+//package org.example;
+/*
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 /**
  * JavaFX App i guess?
  */
+/*
 public class App extends Application {
 
     /**
@@ -17,6 +18,7 @@ public class App extends Application {
      * Saaksime teha javafx control paneliga boti?
      * @param stage
      */
+/*
     @Override
     public void start(Stage stage) {
         var javaVersion = SystemInfo.javaVersion();
@@ -35,8 +37,10 @@ public class App extends Application {
      * Käivitamine
      * @param args
      */
+/*
     public static void main(String[] args) {
         launch();
     }
 
 }
+*/
