@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.entities.Message;
 
 
-public class MaifBot extends ListenerAdapter {
+public class MaifBott extends ListenerAdapter {
 
     //igakord kui keegi serverisse kirjutab siis see klass registeerib selle
     public void onGuildMessageReceived(MessageReceivedEvent event){
