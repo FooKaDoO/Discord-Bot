@@ -33,6 +33,11 @@
             <name>Austin Keener</name>
             <email>keeneraustin@yahoo.com</email>
         </developer>
+        <developer>
+            <id>IdkWhatThis</id>
+            <name>Mihkel Hani</name>
+            <email>yehe@yehe.yehe</email>
+        </developer>
     </developers>
     <scm>
         <connection>scm:git:git://github.com/DV8FromTheWorld/JDA</connection>

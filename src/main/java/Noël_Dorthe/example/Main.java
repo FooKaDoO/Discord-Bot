@@ -16,13 +16,13 @@ public class Main  {
   //Main method
   public static void main(String[] args) throws LoginException {
     //ehitab uue Boti -- Token tuleb ise lisada
-    JDA jda= JDABuilder.createDefault("").build();
-
-
-    //boti staatus on eemal (IDLE)
-  jda.getPresence().setStatus(OnlineStatus.IDLE);
-
-  //kuvab, et eemal vaatab telekat, võiv äravõtta
+        JDA jda= JDABuilder.createDefault("").build();
+    //
+    //
+    //    //boti staatus on eemal (IDLE)
+      jda.getPresence().setStatus(OnlineStatus.ONLINE);
+    //
+    //  //kuvab, et eemal vatab telekat, võiv äravõtta
   jda.getPresence().setActivity(Activity.watching("TV"));
 
   jda.addEventListener(new Commands());
