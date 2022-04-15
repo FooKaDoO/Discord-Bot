@@ -6,14 +6,14 @@ import net.dv8tion.jda.api.entities.Message;
 
 
 public class OttBot extends ListenerAdapter {
+    public final String prefix = "-";
 
     //igakord kui keegi serverisse kirjutab siis see klass registeerib selle
-    public void onGuildMessageReceived(MessageReceivedEvent event){
-        String[] args = event.getMessage().getContentRaw().split(" ");
-
-        if(args[0].equalsIgnoreCase(Main.prefix +"info")){
-            event.getChannel().sendTyping().queue();
-            event.getChannel().sendMessage("Hi, I'm alive").queue();
+    public void onMessageReceived(MessageReceivedEvent event) {
+        String e = event.getMessage().getContentRaw();
+        String[] args = e.split(" ");
+        if (args[0].equalsIgnoreCase(prefix + "ott")) {
+            event.getChannel().sendMessage("Olen otti bot").queue();
         }
     }
 }
