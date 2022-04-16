@@ -8,11 +8,13 @@ import java.util.concurrent.TimeUnit;
 
 public class GuessMeRadio extends ListenerAdapter {
 
+    String prefix = "-";
+
     //igakord kui keegi serverisse kirjutab siis see klass registeerib selle
     public void onMessageReceived(MessageReceivedEvent event) {
         String[] args = event.getMessage().getContentRaw().split(" ");
 
-        if(args[0].equalsIgnoreCase(Main.prefix+"GuessMeRadio")){
+        if(args[0].equalsIgnoreCase(prefix+"GuessMeRadio")){
             event.getChannel().sendTyping().queue();
             event.getChannel().sendMessage("Hi, GuessMeRadio is alive!").queue();
             musicGuessing(event);
