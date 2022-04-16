@@ -13,5 +13,8 @@ public class MaifBott extends ListenerAdapter {
         if (args[0].equalsIgnoreCase(prefix + "maif")) {
             event.getChannel().sendMessage("Olen maifi bot").queue();
         }
+        if (args[0].equalsIgnoreCase(prefix + "delete")) {
+            event.getChannel().deleteMessageById(event.getMessageId()).queue();
+        }
     }
 }
