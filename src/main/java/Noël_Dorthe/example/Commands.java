@@ -11,7 +11,7 @@ public class Commands extends ListenerAdapter {
    public void onMessageReceived(MessageReceivedEvent event){
    String[] args = event.getMessage().getContentRaw().split(" ");
 
-    if(args[0].equalsIgnoreCase(Main.prefix +"info")){
+    if(args[0].equalsIgnoreCase("-" +"info")){
         event.getChannel().sendTyping().queue();
         event.getChannel().sendMessage("Hi, I'm alive").queue();
     }
