@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Message;
 
 public class MiaBot extends ListenerAdapter {
     public final String prefix = "-";
+    private String[][] board = new String[7][6];
 
     //igakord kui keegi serverisse kirjutab siis see klass registeerib selle
     public void onMessageReceived(MessageReceivedEvent event) {

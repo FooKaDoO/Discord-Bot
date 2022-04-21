@@ -11,13 +11,13 @@ import javax.security.auth.login.LoginException;
 public class Main  {
   public static void main(String[] args) throws LoginException {
     //ehitab uue Boti -- Token tuleb ise lisada
-      JDA jda= JDABuilder.createDefault("token").build();
+    JDA jda= JDABuilder.createDefault("").build();
 
-      jda.getPresence().setStatus(OnlineStatus.IDLE);
-      jda.getPresence().setActivity(Activity.watching("TV"));
-      jda.addEventListener(new Commands());
-      jda.addEventListener(new MaifBott());
-      jda.addEventListener(new MiaBot());
-      jda.addEventListener(new GuessMeRadio());
+    jda.getPresence().setStatus(OnlineStatus.IDLE);
+    jda.getPresence().setActivity(Activity.watching("TV"));
+    jda.addEventListener(new Commands());
+    jda.addEventListener(new MaifBott());
+    jda.addEventListener(new MiaBot());
+    jda.addEventListener(new GuessMeRadio());
   }
 }
