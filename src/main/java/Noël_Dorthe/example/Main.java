@@ -11,7 +11,7 @@ import javax.security.auth.login.LoginException;
 public class Main  {
   public static void main(String[] args) throws LoginException {
     //ehitab uue Boti -- Token tuleb ise lisada
-    JDA jda= JDABuilder.createDefault("").build();
+    JDA jda= JDABuilder.createDefault("OTU5NzU1ODYwNDc5OTkxODA4.YkggTA.A7GvjvwcfDLEJ4gcmjOdjAdXVIQ").build();
 
     jda.getPresence().setStatus(OnlineStatus.IDLE);
     jda.getPresence().setActivity(Activity.watching("TV"));

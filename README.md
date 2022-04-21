@@ -7,7 +7,7 @@ GAME ONE:
 *
 creator -- Mihkel Hani 
 
-GAME TWO:
+GAME TWO:Connect4
 *
 creator -- Mia Marta Heikla
 
