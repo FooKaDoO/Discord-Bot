@@ -38,7 +38,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/slf4j-nop.jar.zip!/" />
+          <root url="jar://$MODULE_DIR$/../slf4j-nop.jar.zip!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
