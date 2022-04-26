@@ -9,15 +9,15 @@ import org.jetbrains.annotations.NotNull;
 public class Commands extends ListenerAdapter {
 
     @Override
-    public void onMessageReceived(@NotNull MessageReceivedEvent event){
-   String[] args = event.getMessage().getContentRaw().split(" ");
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        String[] args = event.getMessage().getContentRaw().split(" ");
 
-    if(args[0].equalsIgnoreCase("-" +"info")){
-        event.getChannel().sendTyping().queue();
-        event.getChannel().sendMessage("Try commands:\n"+
-                "-GuessMeRadio\n" +
-                "-maif\n"+
-                "-mia").queue();
+        if (args[0].equalsIgnoreCase("-" + "info")) {
+            event.getChannel().sendTyping().queue();
+            event.getChannel().sendMessage("Try commands:\n" +
+                    "-GuessMeRadio\n" +
+                    "-maif\n" +
+                    "-mia").queue();
+        }
     }
-   }
 }

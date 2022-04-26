@@ -17,10 +17,9 @@ public class MaifBott extends ListenerAdapter {
         String[] args = e.split(" ");
 
         if (args[0].equalsIgnoreCase(prefix)) {
-            if(args[1].equalsIgnoreCase("yahtzee")){
+            if (args[1].equalsIgnoreCase("yahtzee")) {
                 yahtzeeGame(event);
-            }
-            else if(args.length < 2) {
+            } else if (args.length < 2) {
                 rules(event);
             }
         }
@@ -28,6 +27,7 @@ public class MaifBott extends ListenerAdapter {
 
     /**
      * Starts a new event listener for the game based on the command parameters.
+     *
      * @param event Message event with or without parameters.
      */
     private void yahtzeeGame(MessageReceivedEvent event) {
@@ -38,21 +38,22 @@ public class MaifBott extends ListenerAdapter {
 
     /**
      * Sends the rules of the game to the player.
+     *
      * @param event The message event of the command.
      */
-    private void rules(MessageReceivedEvent event){
+    private void rules(MessageReceivedEvent event) {
         event.getAuthor().openPrivateChannel().flatMap(channel -> channel.sendMessage(
-                    "I am a Yahtzee Clone, with fake rules. \n" +
+                "I am a Yahtzee Clone, with fake rules. \n" +
                         "To start a game, give the command [-maif yahtzee <other member> <other member> (etc.)]\n" +
                         "The game lasts 13 turns unless someone gives command -maif end. \n" +
-                            "Possible commands after -maif prefix are: \n" +
-                            "roll <parameters> - without parameters rolls all dice, otherwise rolls the dice of which number is given, \n" +
-                            "so 3 rolls the 3. dice and 2 5 rolls the 2. and 5. dice. \n" +
-                            "Dice can be rolled up to 3 times. \n" +
-                            "stop - ends your turn and adds your points.\n" +
-                            "leave - makes you leave the game.\n" +
-                            "end -  ends the game and gives the final results.\n" +
-                            "Game will also end, when all players leave."
+                        "Possible commands after -maif prefix are: \n" +
+                        "roll <parameters> - without parameters rolls all dice, otherwise rolls the dice of which number is given, \n" +
+                        "so 3 rolls the 3. dice and 2 5 rolls the 2. and 5. dice. \n" +
+                        "Dice can be rolled up to 3 times. \n" +
+                        "stop - ends your turn and adds your points.\n" +
+                        "leave - makes you leave the game.\n" +
+                        "end -  ends the game and gives the final results.\n" +
+                        "Game will also end, when all players leave."
         )).queue();
         event.getChannel().sendMessage("I sent the rules to you in your private messages.").queue();
     }
