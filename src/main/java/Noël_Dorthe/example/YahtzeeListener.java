@@ -93,7 +93,7 @@ public class YahtzeeListener extends ListenerAdapter {
     }
 
     /**
-     * For readabilty purposes a separate function which is called when the player chooses to roll a certain amount of dice.
+     * Function which is called when the player chooses to roll a certain amount of dice.
      *
      * @param event The message event.
      * @param args  Event message content in string arguments format.
