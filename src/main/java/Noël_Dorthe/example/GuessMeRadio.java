@@ -2,6 +2,7 @@ package Noël_Dorthe.example;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
 
@@ -10,8 +11,8 @@ public class GuessMeRadio extends ListenerAdapter {
 
     String prefix = "-";
 
-    //igakord kui keegi serverisse kirjutab siis see klass registeerib selle
-    public void onMessageReceived(MessageReceivedEvent event) {
+    @Override
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         String[] args = event.getMessage().getContentRaw().split(" ");
 
         if(args[0].equalsIgnoreCase(prefix+"GuessMeRadio")){
