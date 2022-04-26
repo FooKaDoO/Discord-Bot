@@ -86,6 +86,10 @@ public class YahtzeeListener extends ListenerAdapter {
 
     /**
      * If player wants the turn to stop then this function is called.
+     * <br>
+     * This is done by making the current roll the final roll so no more rolls can be called.
+     * <br>
+     * Also points of the player are added based on the punkt(taringud) method.
      */
     private void stopVeeretamine() {
         currentRoll = 3;
@@ -195,6 +199,7 @@ public class YahtzeeListener extends ListenerAdapter {
             taring.add(i);
         }
 
+        // If there is a row of concurrent dice.
         if (
                 taring.contains(6) &&
                 taring.contains(5) &&
@@ -204,6 +209,7 @@ public class YahtzeeListener extends ListenerAdapter {
         )
             return 60;
 
+        // If there is a row of concurrent dice.
         if (
                 taring.contains(5) &&
                         taring.contains(4) &&
@@ -213,19 +219,23 @@ public class YahtzeeListener extends ListenerAdapter {
         )
             return 60;
 
+        // If there is 5 of some dice.
         for (int i = 1; i <= 6; i++) {
             if(Collections.frequency(taring, i) == 5)
                 return 50;
         }
+        // If there is 4 of some dice.
         for (int i = 1; i <= 6; i++) {
             if(Collections.frequency(taring, i) == 4)
                 return 40;
         }
+        // If there is 3 of some dice.
         for (int i = 1; i <= 6; i++) {
             if(Collections.frequency(taring, i) == 3)
                 return 30;
         }
 
+        // Else just return the sum of the dice.
         return Arrays.stream(taringud).sum();
     }
 
