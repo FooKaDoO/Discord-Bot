@@ -23,6 +23,10 @@ public class YahtzeeListener extends ListenerAdapter {
 
     private String prefix = "-maif";
 
+    /**
+     * Constructor for the YahtzeeListener object which creates the yahtzee game based on the players.
+     * @param mangijad Given players.
+     */
     public YahtzeeListener(List<Member> mangijad){
         this.mangijad = mangijad;
         this.punktid = new ArrayList<>();
