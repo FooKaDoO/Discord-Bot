@@ -21,7 +21,7 @@ public class YahtzeeListener extends ListenerAdapter {
     private Random rd;
     private int[] taringud;
 
-    private String prefix = "maif";
+    private String prefix = "-maif";
 
     public YahtzeeListener(List<Member> mangijad){
         this.mangijad = mangijad;
@@ -43,13 +43,13 @@ public class YahtzeeListener extends ListenerAdapter {
 
             String[] args = event.getMessage().getContentRaw().split(" ");
 
-            if(args[0].equalsIgnoreCase("maif")) {
+            if(args[0].equalsIgnoreCase(prefix)) {
 
-                if(args.length > 1 && args[1].equalsIgnoreCase("veereta")){
+                if(args.length > 1 && args[1].equalsIgnoreCase("roll")){
                     veeretamine(event, args);
                 }
 
-                else if(args.length > 1 && args[1].equalsIgnoreCase("aitab")){
+                else if(args.length > 1 && args[1].equalsIgnoreCase("stop")){
                     stopVeeretamine();
                 }
 
@@ -57,7 +57,7 @@ public class YahtzeeListener extends ListenerAdapter {
                     leaveGame(event);
                 }
 
-                else if(args.length > 1 && args[1].equalsIgnoreCase("lopp")){
+                else if(args.length > 1 && args[1].equalsIgnoreCase("end")){
                     currentMove = 13;
                 }
 

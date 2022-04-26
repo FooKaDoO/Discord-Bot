@@ -13,7 +13,10 @@ public class Commands extends ListenerAdapter {
 
     if(args[0].equalsIgnoreCase("-" +"info")){
         event.getChannel().sendTyping().queue();
-        event.getChannel().sendMessage("Hi, I'm alive").queue();
+        event.getChannel().sendMessage("Try commands:\n"+
+                "-GuessMeRadio\n" +
+                "-maif\n"+
+                "-mia").queue();
     }
    }
 }
