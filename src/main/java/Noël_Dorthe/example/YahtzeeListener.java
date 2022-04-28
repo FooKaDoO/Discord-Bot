@@ -1,6 +1,7 @@
 package Noël_Dorthe.example;
 
-import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -10,7 +11,7 @@ import java.util.*;
 
 public class YahtzeeListener extends ListenerAdapter {
 
-    private List<Member> mangijad;
+    private List<User> mangijad = new ArrayList<>();
     private List<Integer> punktid;
     private int mangijateArv;
 
@@ -22,14 +23,16 @@ public class YahtzeeListener extends ListenerAdapter {
     private int[] taringud;
 
     private String prefix = "-maif";
+    private JDA jda;
 
     /**
      * Constructor for the YahtzeeListener object which creates the yahtzee game based on the players.
      *
      * @param mangijad Given players.
      */
-    public YahtzeeListener(List<Member> mangijad) {
-        this.mangijad = mangijad;
+    public YahtzeeListener(List<User> mangijad, JDA jda) {
+        this.jda = jda;
+        this.mangijad.addAll(mangijad);
         this.punktid = new ArrayList<>();
         this.mangijateArv = mangijad.size();
         this.currentMove = 0;
@@ -43,8 +46,7 @@ public class YahtzeeListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
 
-        // If the user who sent message is making the move
-        if (event.getMember() == mangijad.get(currentMember)) {
+        if (event.getAuthor().equals(mangijad.get(currentMember))) {
 
             String[] args = event.getMessage().getContentRaw().split(" ");
 
@@ -52,8 +54,8 @@ public class YahtzeeListener extends ListenerAdapter {
 
                 if (args.length > 1 && args[1].equalsIgnoreCase("roll")) {
                     veeretamine(event, args);
-                } else if (args.length > 1 && args[1].equalsIgnoreCase("stop")) {
-                    stopVeeretamine();
+                } else if (args.length > 1 && args[1].equalsIgnoreCase("next")) {
+                    stopVeeretamine(event);
                 } else if (args.length > 1 && args[1].equalsIgnoreCase("leave")) {
                     leaveGame(event);
                 } else if (args.length > 1 && args[1].equalsIgnoreCase("end")) {
@@ -73,7 +75,7 @@ public class YahtzeeListener extends ListenerAdapter {
      * @param event The leaving message event, so the bot can reply and let the player know they left the game.
      */
     private void leaveGame(MessageReceivedEvent event) {
-        event.getChannel().sendMessage("Lahkusite mängust" + mangijad.get(currentMember).getNickname()).queue();
+        event.getChannel().sendMessage("Lahkusite mängust" + mangijad.get(currentMember).getAsMention()).queue();
         currentRoll = 0;
         punktid.remove(currentMember);
         mangijad.remove(currentMember);
@@ -86,10 +88,14 @@ public class YahtzeeListener extends ListenerAdapter {
      * This is done by making the current roll the final roll so no more rolls can be called.
      * <br>
      * Also points of the player are added based on the punkt(taringud) method.
+     * @param event The message event.
      */
-    private void stopVeeretamine() {
+    private void stopVeeretamine(MessageReceivedEvent event) {
         currentRoll = 3;
-        punktid.set(currentMember, punktid.get(currentMember) + punkt(taringud));
+        Integer punkts = punkt(taringud);
+        event.getChannel().sendMessage("Saadi "+ punkts +" punkti").queue();
+        punktid.set(currentMember, punktid.get(currentMember) + punkts);
+        taringud = veereta(new String[] {} ,taringud, 0);
     }
 
     /**
@@ -101,9 +107,11 @@ public class YahtzeeListener extends ListenerAdapter {
     public void veeretamine(MessageReceivedEvent event, String[] args) {
         taringud = veereta(args, taringud, currentRoll);
         event.getChannel().sendMessage("Veeretasite:").queue();
+        String taringudStr = "";
         for (int i : taringud) {
-            event.getChannel().sendMessage(i + "").queue();
+            taringudStr += " " + i;
         }
+        event.getChannel().sendMessage(taringudStr).queue();
         currentRoll++;
     }
 
@@ -113,20 +121,6 @@ public class YahtzeeListener extends ListenerAdapter {
      * @param event The message event so the bot can reply.
      */
     public void endCases(MessageReceivedEvent event) {
-        // In case the max cap of rolls is reached, the rolls will be reset and the turn will be given over to the next player.
-        if (currentRoll >= 3) {
-            currentRoll = 0;
-            event.getChannel().sendMessage(mangijad.get(currentMember).getNickname() + " sai " + punktid.get(currentMember) + " punkti").queue();
-            currentMember++;
-            event.getChannel().sendMessage("Ootan " + mangijad.get(currentMember).getNickname() + " käiku").queue();
-        }
-        // In case the last player is reached, the program goes back to the first player and increments the current move.
-        if (currentMember >= mangijateArv) {
-            currentMember = 0;
-            currentMove++;
-            event.getChannel().sendMessage(currentMove + ". käik on läbi").queue();
-            event.getChannel().sendMessage("Ootan " + mangijad.get(currentMember).getNickname() + " käiku").queue();
-        }
         // If the 13th move is finished the game ends.
         if (currentMove >= 13) {
             int max = 0;
@@ -134,9 +128,23 @@ public class YahtzeeListener extends ListenerAdapter {
                 if (punktid.get(i) > punktid.get(max))
                     max = i;
             }
-            event.getChannel().sendMessage("Mäng on läbi, võitja on " + mangijad.get(max).getNickname() + " " + punktid.get(max) + " punktiga!").queue();
+            event.getChannel().sendMessage("Mäng on läbi, võitja on " + mangijad.get(max).getAsMention() + " " + punktid.get(max) + " punktiga!").queue();
             // Removes this event listener
-            event.getJDA().removeEventListener(this);
+            jda.removeEventListener(this);
+        }
+        // In case the last player is reached, the program goes back to the first player and increments the current move.
+        if (currentMember >= mangijateArv) {
+            currentMember = 0;
+            currentMove++;
+            event.getChannel().sendMessage(currentMove + ". käik on läbi").queue();
+            event.getChannel().sendMessage("Ootan " + mangijad.get(currentMember).getAsMention() + " käiku").queue();
+        }
+        // In case the max cap of rolls is reached, the rolls will be reset and the turn will be given over to the next player.
+        if (currentRoll >= 3) {
+            currentRoll = 0;
+            event.getChannel().sendMessage(mangijad.get(currentMember).getAsMention() + " on " + punktid.get(currentMember) + " punkti").queue();
+            currentMember++;
+            event.getChannel().sendMessage("Ootan " + mangijad.get(currentMember).getAsMention() + " käiku").queue();
         }
     }
 
@@ -152,22 +160,22 @@ public class YahtzeeListener extends ListenerAdapter {
         // If first roll, roll all dice.
         if (currentRoll == 0) {
             taringud = new int[]{
-                    rd.nextInt(),
-                    rd.nextInt(),
-                    rd.nextInt(),
-                    rd.nextInt(),
-                    rd.nextInt()
+                    rd.nextInt(1, 7),
+                    rd.nextInt(1, 7),
+                    rd.nextInt(1, 7),
+                    rd.nextInt(1, 7),
+                    rd.nextInt(1, 7)
             };
         }
         // Else if not last roll, roll chosen dice, unless not specified.
         else if (currentRoll < 3) {
             if (args.length < 3)
                 taringud = new int[]{
-                        rd.nextInt(),
-                        rd.nextInt(),
-                        rd.nextInt(),
-                        rd.nextInt(),
-                        rd.nextInt()
+                        rd.nextInt(1, 7),
+                        rd.nextInt(1, 7),
+                        rd.nextInt(1, 7),
+                        rd.nextInt(1, 7),
+                        rd.nextInt(1, 7)
                 };
             else {
                 List<Integer> whatToRoll = new ArrayList<>();
@@ -175,12 +183,13 @@ public class YahtzeeListener extends ListenerAdapter {
                     // Try-catch method for illegal arguments.
                     try {
                         whatToRoll.add(Integer.parseInt(args[i]));
+                        System.out.println(args[i]);
                     } catch (NumberFormatException e) {
                     }
                 }
 
                 for (Integer integer : whatToRoll) {
-                    taringud[integer] = rd.nextInt();
+                    taringud[integer-1] = rd.nextInt(1, 7);
                 }
             }
         }
