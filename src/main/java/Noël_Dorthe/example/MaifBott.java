@@ -17,6 +17,7 @@ public class MaifBott extends ListenerAdapter {
         this.jda = jda;
     }
 
+
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         String e = event.getMessage().getContentRaw();
