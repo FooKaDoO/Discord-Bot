@@ -10,7 +10,9 @@ import java.util.Arrays;
 public class MiaBot extends ListenerAdapter {
     public final String prefix = "-";
 
-    public Character white ='⚪';
+    private char white ='⚪';
+    //private Emoji white = Emoji.fromUnicode("U+26AA");
+    //🔴 🔴 '\uD83D\uDD34'
 
 
     /**
@@ -20,6 +22,13 @@ public class MiaBot extends ListenerAdapter {
         char[][] board = new char[7][6];
         for (char[] row : board) {
             Arrays.fill(row,white);
+        }
+        return board;
+    }
+    private char[][] fill(char[][] board,char player) {
+
+        for (char[] row : board) {
+            //Arrays.fill(row,white);
         }
         return board;
     }
