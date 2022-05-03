@@ -19,6 +19,7 @@ public class Main {
         // This is where the bot object is created. Into createDefault() goes the bot token.
         JDA jda = JDABuilder.createDefault("").build();
 
+        // Pidin midagi lisama
         // Bot is set to Idle and watching TV.
         jda.getPresence().setStatus(OnlineStatus.IDLE);
         jda.getPresence().setActivity(Activity.watching("TV"));
