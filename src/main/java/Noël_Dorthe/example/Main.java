@@ -27,7 +27,7 @@ public class Main {
         jda.addEventListener(new Commands());
         // Each of our commands' listeners.
         jda.addEventListener(new MaifBott(jda));
-        jda.addEventListener(new MiaBot());
+        jda.addEventListener(new Connect4());
         jda.addEventListener(new GuessMeRadio());
     }
 }
