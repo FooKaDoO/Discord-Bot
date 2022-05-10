@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class Connect4 extends ListenerAdapter {
     public final String prefix = "-";
-
+    private char[][] board = new char[6][7];
     private char white ='⚪';
     //private Emoji white = Emoji.fromUnicode("U+26AA");
     //🔴 🔴 '\uD83D\uDD34'
@@ -39,9 +39,23 @@ public class Connect4 extends ListenerAdapter {
             for (char c : gameBoard[i]) {
                 row += c;
             }
+            if(i+1== gameBoard.length){
+
+                Message msg = event.getChannel().sendMessage(row).complete();
+                msg.addReaction("1️⃣").queue();
+                msg.addReaction("2️⃣").queue();
+                msg.addReaction("3️⃣").queue();
+                msg.addReaction("4️⃣").queue();
+                msg.addReaction("5️⃣").queue();
+                msg.addReaction("6️⃣").queue();
+                msg.addReaction("7️⃣").queue();
+                break;
+            }
             event.getChannel().sendMessage(row).queue();
             row ="";
         }
+
+
     }
 
     //igakord kui keegi serverisse kirjutab siis see klass registeerib selle
