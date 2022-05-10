@@ -86,7 +86,7 @@ public class Connect4 extends ListenerAdapter {
         EmbedBuilder builder = new EmbedBuilder();
         builder.setColor(Color.decode("#f1c232"));
         builder.setTitle("Connect4 game:");
-        Message msg = null;
+
         String row = "";
         for (int i = 0; i < gameBoard.length; i++) {
             for (String c : gameBoard[i]) {
@@ -106,12 +106,24 @@ public class Connect4 extends ListenerAdapter {
         String[][] gameBoard = createGameBoard();
         String e = event.getMessage().getContentRaw();
         String[] args = e.split(" ");
+
+
         if (args[0].equalsIgnoreCase(prefix + "mia")) {
             //event.getChannel().sendMessage("Olen mia bot").queue();
 
             //üks versioon küsi kumb parem välja näeb
             //printGameBoard(gameBoard,event);
-            event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), gameBoard).build()).queue();
+            event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), gameBoard).build()).queue(message -> {
+                message.addReaction("1️⃣").queue();
+                message.addReaction("2️⃣").queue();
+                message.addReaction("3️⃣").queue();
+                message.addReaction("4️⃣").queue();
+                message.addReaction("5️⃣").queue();
+                message.addReaction("6️⃣").queue();
+                message.addReaction("7️⃣").queue();
+            });
+
+
         }
 
 
