@@ -13,6 +13,8 @@ import java.util.Arrays;
 public class Connect4 extends ListenerAdapter {
     public final String prefix = "-";
     private String[][] board = new String[6][7];
+    private boolean gameOver = false;
+
     private  String white ="⚪";
     private String yellow = "🟡";
     private String red = "\uD83D\uDD34";//ei tea kas see töötab??
