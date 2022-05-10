@@ -1,9 +1,12 @@
 package Noël_Dorthe.example;
 
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.entities.Message;
 
+import java.awt.*;
 import java.util.Arrays;
 
 
@@ -41,7 +44,7 @@ public class Connect4 extends ListenerAdapter {
 
     private String[][] createGameBoardAddColor(String[][] board, MessageReceivedEvent event, int index,int player) { // there should also be which player reacted, and then the color
         for (int i = board.length-1; i >= 0 ; i--) {
-            if(board[i][index]==(white)&&player==1){
+            if(board[i][index]==(white)){
                 if(player==1){
                     board[i][index] = yellow;///char at ei pruugi ka töötada
                     break;
@@ -67,7 +70,6 @@ public class Connect4 extends ListenerAdapter {
                 row += c;
             }
             msg = event.getChannel().sendMessage(row).complete();
-
             row ="";
         }
         msg.addReaction("1️⃣").queue();
@@ -80,6 +82,25 @@ public class Connect4 extends ListenerAdapter {
 
     }
 
+    private static EmbedBuilder boardInServer(Guild guild,String[][] gameBoard){
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setColor(Color.decode("#f1c232"));
+        builder.setTitle("Connect4 game:");
+        Message msg = null;
+        String row = "";
+        for (int i = 0; i < gameBoard.length; i++) {
+            for (String c : gameBoard[i]) {
+                row += c;
+            }
+            row+= "\n";
+        }
+        builder.setDescription(row);
+
+        return builder;
+    }
+
+
+
     //igakord kui keegi serverisse kirjutab siis see klass registeerib selle
     public void onMessageReceived(MessageReceivedEvent event) {
         String[][] gameBoard = createGameBoard();
@@ -87,7 +108,10 @@ public class Connect4 extends ListenerAdapter {
         String[] args = e.split(" ");
         if (args[0].equalsIgnoreCase(prefix + "mia")) {
             //event.getChannel().sendMessage("Olen mia bot").queue();
-            printGameBoard(gameBoard,event);
+
+            //üks versioon küsi kumb parem välja näeb
+            //printGameBoard(gameBoard,event);
+            event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), gameBoard).build()).queue();
         }
 
 
