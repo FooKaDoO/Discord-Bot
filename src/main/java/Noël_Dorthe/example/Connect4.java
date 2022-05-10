@@ -56,13 +56,8 @@ public class Connect4 extends ListenerAdapter {
         return board;
     }
 
-    private char[][] fill(char[][] board,char player) {
 
-        for (char[] row : board) {
-            //Arrays.fill(row,white);
-        }
-        return board;
-    }
+
 
     private void printGameBoard(String[][] gameBoard, MessageReceivedEvent event) {
         Message msg = null;
