@@ -23,6 +23,8 @@ public class Main {
         // Bot is set to Idle and watching TV.
         jda.getPresence().setStatus(OnlineStatus.IDLE);
         jda.getPresence().setActivity(Activity.watching("TV"));
+
+        jda.addEventListener(new EventJoin());
         // The info command listener.
         jda.addEventListener(new Commands());
         // Each of our commands' listeners.
