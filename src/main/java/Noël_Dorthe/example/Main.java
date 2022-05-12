@@ -7,6 +7,9 @@ import net.dv8tion.jda.api.entities.Activity;
 
 
 import javax.security.auth.login.LoginException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class Main {
     /**
@@ -15,9 +18,12 @@ public class Main {
      * @param args The app arguments, currently not in use, so these are to be ignored.
      * @throws LoginException Throws LoginException if token is invalid.
      */
-    public static void main(String[] args) throws LoginException {
-        // This is where the bot object is created. Into createDefault() goes the bot token.
-        JDA jda = JDABuilder.createDefault("").build();
+    public static void main(String[] args) throws LoginException, FileNotFoundException {
+        // Bot token inside of text file.
+        Scanner sc = new Scanner(new File("token.txt"));
+        String token = sc.nextLine().strip();
+        // This is where the bot object is created.
+        JDA jda = JDABuilder.createDefault(token).build();
 
         // Pidin midagi lisama
         // Bot is set to Idle and watching TV.
