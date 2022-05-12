@@ -25,7 +25,7 @@ public class Main {
         jda.getPresence().setActivity(Activity.watching("TV"));
 
         jda.addEventListener(new EventJoin());
-        // The info command listener.
+        // The base commands listener.
         jda.addEventListener(new Commands(jda));
     }
 }

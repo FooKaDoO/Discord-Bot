@@ -36,17 +36,17 @@ public class Commands extends ListenerAdapter {
         // TODO: Tehke event listenerid nagu mina. Vaadake mu YahtzeeListeneri.
         else if (args[0].equalsIgnoreCase(prefix+"mia")) {
             if (args.length < 2) {
-                yahtzeeRules(event); // TODO: Oma reeglid.
+                connect4Rules(event); // TODO: Oma reeglid.
             }
             else if (args[1].equalsIgnoreCase("connect4")) {
                 jda.addEventListener(new Connect4(jda));
             }
         }
-        else if (args[0].equalsIgnoreCase(prefix+"mia")) {
+        else if (args[0].equalsIgnoreCase(prefix+"GuessMeRadio")) {
             if (args.length < 2) {
-                yahtzeeRules(event); // TODO: Oma reeglid.
+                GuessMeRadioRules(event); // TODO: Oma reeglid.
             }
-            else if (args[1].equalsIgnoreCase("connect4")) {
+            else if (args[1].equalsIgnoreCase("start")) {
                 jda.addEventListener(new GuessMeRadio(jda));
             }
         }
@@ -98,4 +98,50 @@ public class Commands extends ListenerAdapter {
         )).queue();
         event.getChannel().sendMessage("I sent the rules to you in your private messages.").queue();
     }
+
+    /**
+     * Sends the Connect4 rules of the game to the player.
+     *
+     * @param event The message event of the command.
+     */
+    private void connect4Rules(MessageReceivedEvent event) {
+        event.getAuthor().openPrivateChannel().flatMap(channel -> channel.sendMessage(
+                "  I am a Yahtzee Clone, with fake rules. \n" +
+                        " To start a game, give the command [-maif yahtzee <other member> <other member> (etc.)]\n" +
+                        " The game lasts 13 turns unless someone gives command -maif end. \n" +
+                        "  Possible commands after -maif prefix are: \n" +
+                        " roll <parameters> - without parameters rolls all dice, otherwise rolls the dice of which number is given, \n" +
+                        "so 3 rolls the 3. dice and 2 5 rolls the 2. and 5. dice. \n" +
+                        "Dice can be rolled up to 3 times. \n" +
+                        " next - ends your turn and adds your points.\n" +
+                        " leave - makes you leave the game.\n" +
+                        " end -  ends the game and gives the final results.\n" +
+                        "Game will also end, when all players leave."
+        )).queue();
+        event.getChannel().sendMessage("I sent the rules to you in your private messages.").queue();
+    }
+
+    /**
+     * Sends the GuessMeRadio rules of the game to the player.
+     *
+     * @param event The message event of the command.
+     */
+    private void GuessMeRadioRules(MessageReceivedEvent event) {
+        event.getAuthor().openPrivateChannel().flatMap(channel -> channel.sendMessage(
+                "  I am a Yahtzee Clone, with fake rules. \n" +
+                        " To start a game, give the command [-maif yahtzee <other member> <other member> (etc.)]\n" +
+                        " The game lasts 13 turns unless someone gives command -maif end. \n" +
+                        "  Possible commands after -maif prefix are: \n" +
+                        " roll <parameters> - without parameters rolls all dice, otherwise rolls the dice of which number is given, \n" +
+                        "so 3 rolls the 3. dice and 2 5 rolls the 2. and 5. dice. \n" +
+                        "Dice can be rolled up to 3 times. \n" +
+                        " next - ends your turn and adds your points.\n" +
+                        " leave - makes you leave the game.\n" +
+                        " end -  ends the game and gives the final results.\n" +
+                        "Game will also end, when all players leave."
+        )).queue();
+        event.getChannel().sendMessage("I sent the rules to you in your private messages.").queue();
+    }
+
+
 }
