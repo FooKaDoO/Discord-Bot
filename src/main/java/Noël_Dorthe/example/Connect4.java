@@ -1,6 +1,7 @@
 package Noël_Dorthe.example;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -20,7 +21,11 @@ public class Connect4 extends ListenerAdapter {
     private String red = "\uD83D\uDD34";//ei tea kas see töötab??
     //private Emoji white = Emoji.fromUnicode("U+26AA");
     //🔴 🔴 '\uD83D\uDD34'
+    private JDA jda;
 
+    public Connect4(JDA jda) {
+        this.jda = jda;
+    } // TODO: Pane 'jda.removeEventListener(this);' sinna kus tahad mängu lõpetada.
 
     /**
      *Makes the orginal all white gameboard
