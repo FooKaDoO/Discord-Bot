@@ -42,6 +42,7 @@ public class Commands extends ListenerAdapter {
                 jda.addEventListener(new Connect4(jda));
             }
         }
+        // TODO: Tehke event listenerid nagu mina. Vaadake mu YahtzeeListeneri.
         else if (args[0].equalsIgnoreCase(prefix+"GuessMeRadio")) {
             if (args.length < 2) {
                 GuessMeRadioRules(event); // TODO: Oma reeglid.
