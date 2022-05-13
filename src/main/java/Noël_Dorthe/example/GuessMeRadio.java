@@ -36,8 +36,6 @@ public class GuessMeRadio extends ListenerAdapter {
             Member member = event.getMember();
             GuildVoiceState memberVoiceState = member.getVoiceState();
 
-
-
             if(selfVoiceState.inAudioChannel()){
                 channel.sendMessage("I'm already in a voice channel!").queue();
             }
