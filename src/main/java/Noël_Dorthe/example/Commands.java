@@ -34,12 +34,12 @@ public class Commands extends ListenerAdapter {
                     "-mia").queue();
         }
         // TODO: Tehke event listenerid nagu mina. Vaadake mu YahtzeeListeneri.
-        else if (args[0].equalsIgnoreCase(prefix+"mia")) {
+        else if (args[0].equalsIgnoreCase(prefix+"connect4")) {
             if (args.length < 2) {
                 connect4Rules(event); // TODO: Oma reeglid.
             }
-            else if (args[1].equalsIgnoreCase("connect4")) {
-                jda.addEventListener(new Connect4(jda));
+            else if (args[1].equalsIgnoreCase("play")) {
+                connect4Game(event);
             }
         }
         // TODO: Tehke event listenerid nagu mina. Vaadake mu YahtzeeListeneri.
@@ -107,19 +107,16 @@ public class Commands extends ListenerAdapter {
      */
     private void connect4Rules(MessageReceivedEvent event) {
         event.getAuthor().openPrivateChannel().flatMap(channel -> channel.sendMessage(
-                "  I am a Yahtzee Clone, with fake rules. \n" +
-                        " To start a game, give the command [-maif yahtzee <other member> <other member> (etc.)]\n" +
-                        " The game lasts 13 turns unless someone gives command -maif end. \n" +
-                        "  Possible commands after -maif prefix are: \n" +
-                        " roll <parameters> - without parameters rolls all dice, otherwise rolls the dice of which number is given, \n" +
-                        "so 3 rolls the 3. dice and 2 5 rolls the 2. and 5. dice. \n" +
-                        "Dice can be rolled up to 3 times. \n" +
-                        " next - ends your turn and adds your points.\n" +
-                        " leave - makes you leave the game.\n" +
-                        " end -  ends the game and gives the final results.\n" +
-                        "Game will also end, when all players leave."
+                " connect4Rules "
         )).queue();
         event.getChannel().sendMessage("I sent the rules to you in your private messages.").queue();
+    }
+    private void connect4Game(MessageReceivedEvent event) {
+        List<User> mangijad = new ArrayList<>();
+        mangijad.add(event.getAuthor());
+        mangijad.addAll(event.getMessage().getMentionedUsers());
+        //event.getChannel().sendMessage("New Yahtzee game initiated.").queue();
+        jda.addEventListener(new Connect4(mangijad, jda));
     }
 
     /**

@@ -3,15 +3,23 @@ package Noël_Dorthe.example;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.entities.Message;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class Connect4 extends ListenerAdapter {
+    private List<User> mangijad = new ArrayList<>();
+
+
+
     public final String prefix = "-";
     private String[][] board = new String[6][7];
     private boolean gameOver = false;
@@ -23,8 +31,9 @@ public class Connect4 extends ListenerAdapter {
     //🔴 🔴 '\uD83D\uDD34'
     private JDA jda;
 
-    public Connect4(JDA jda) {
+    public Connect4(List<User> mangijad,JDA jda) {
         this.jda = jda;
+
     } // TODO: Pane 'jda.removeEventListener(this);' sinna kus tahad mängu lõpetada.
 
     /**
@@ -109,18 +118,16 @@ public class Connect4 extends ListenerAdapter {
 
 
     //igakord kui keegi serverisse kirjutab siis see klass registeerib selle
-    public void onMessageReceived(MessageReceivedEvent event) {
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         String[][] gameBoard = createGameBoard();
         String e = event.getMessage().getContentRaw();
         String[] args = e.split(" ");
 
-
-        if (args[0].equalsIgnoreCase(prefix + "mia")) {
             //event.getChannel().sendMessage("Olen mia bot").queue();
 
             //üks versioon küsi kumb parem välja näeb
             //printGameBoard(gameBoard,event);
-            event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), gameBoard).build()).queue(message -> {
+        event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), gameBoard).build()).queue(message -> {
                 message.addReaction("1️⃣").queue();
                 message.addReaction("2️⃣").queue();
                 message.addReaction("3️⃣").queue();
@@ -129,9 +136,6 @@ public class Connect4 extends ListenerAdapter {
                 message.addReaction("6️⃣").queue();
                 message.addReaction("7️⃣").queue();
             });
-
-
-        }
 
 
 
