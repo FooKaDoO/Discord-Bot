@@ -19,6 +19,7 @@ public class Main {
      * @throws LoginException Throws LoginException if token is invalid.
      */
     public static void main(String[] args) throws LoginException, FileNotFoundException {
+        // Pidin muutma main file et uuesti pushida
         // Bot token inside of text file.
         Scanner sc = new Scanner(new File("token.txt"));
         String token = sc.nextLine().strip();
