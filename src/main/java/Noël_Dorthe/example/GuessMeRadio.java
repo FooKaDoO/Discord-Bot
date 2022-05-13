@@ -1,10 +1,13 @@
 package Noël_Dorthe.example;
 
+import Noël_Dorthe.example.GuessMeRadioFiles.PlayerManager;
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -13,7 +16,7 @@ public class GuessMeRadio extends ListenerAdapter {
     String prefix = "-";
     private JDA jda;
 
-    public GuessMeRadio(JDA jda) {
+    public GuessMeRadio(List<User> mangijad, JDA jda) {
         this.jda = jda;
     } // TODO: Pane 'jda.removeEventListener(this);' sinna kus tahad mängu lõpetada.
 
@@ -29,13 +32,9 @@ public class GuessMeRadio extends ListenerAdapter {
     }
 
     public void musicGuessing(MessageReceivedEvent event){
-        sleepSek(2);
-        event.getChannel().sendMessage("I will play you a serie of songs and you will have to guess the names of them.").queue();
-        sleepSek(2);
-        event.getChannel().sendMessage("If you want to guess the name of the song be sure to add '?' in front of Your guess.").queue();
-        sleepSek(2);
         event.getChannel().sendMessage("Here we go!").queue();
-
+        PlayerManager.getInstance().loadAndPlay(event.getTextChannel(), "https://www.youtube.com/watch?v=mMfxI3r_LyA");
+        jda.removeEventListener(this);
     }
 
     //Meetod, et oleks lihtsam ja kiirem rakendada "sleep" funktiooni sekundites.

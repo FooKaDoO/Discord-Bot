@@ -48,7 +48,7 @@ public class Commands extends ListenerAdapter {
                 GuessMeRadioRules(event); // TODO: Oma reeglid.
             }
             else if (args[1].equalsIgnoreCase("start")) {
-                jda.addEventListener(new GuessMeRadio(jda));
+                GuessMeRadioGame(event);
             }
         }
         else if (args[0].equalsIgnoreCase(prefix+"maif")) {
@@ -126,19 +126,18 @@ public class Commands extends ListenerAdapter {
      */
     private void GuessMeRadioRules(MessageReceivedEvent event) {
         event.getAuthor().openPrivateChannel().flatMap(channel -> channel.sendMessage(
-                "  I am a Yahtzee Clone, with fake rules. \n" +
-                        " To start a game, give the command [-maif yahtzee <other member> <other member> (etc.)]\n" +
-                        " The game lasts 13 turns unless someone gives command -maif end. \n" +
-                        "  Possible commands after -maif prefix are: \n" +
-                        " roll <parameters> - without parameters rolls all dice, otherwise rolls the dice of which number is given, \n" +
-                        "so 3 rolls the 3. dice and 2 5 rolls the 2. and 5. dice. \n" +
-                        "Dice can be rolled up to 3 times. \n" +
-                        " next - ends your turn and adds your points.\n" +
-                        " leave - makes you leave the game.\n" +
-                        " end -  ends the game and gives the final results.\n" +
-                        "Game will also end, when all players leave."
+                "I will play you a serie of songs and you will have to guess the names of them. " +
+                        "If you want to guess the name of the song make sure to add '?' in front of Your guess."
         )).queue();
         event.getChannel().sendMessage("I sent the rules to you in your private messages.").queue();
+    }
+
+    private void GuessMeRadioGame(MessageReceivedEvent event){
+        List<User> mangijad = new ArrayList<>();
+        mangijad.add(event.getAuthor());
+        mangijad.addAll(event.getMessage().getMentionedUsers());
+        event.getChannel().sendMessage("New GuessMeRadio game initiated!").queue();
+        jda.addEventListener(new GuessMeRadio(mangijad,jda));
     }
 
 
