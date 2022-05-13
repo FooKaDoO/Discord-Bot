@@ -76,8 +76,54 @@ public class Connect4 extends ListenerAdapter {
     }
 
 
+    private static EmbedBuilder boardInServer(Guild guild,String[][] gameBoard){
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setColor(Color.decode("#f1c232"));
+        builder.setTitle("Connect4 game:");
 
+        String row = "";
+        for (int i = 0; i < gameBoard.length; i++) {
+            for (String c : gameBoard[i]) {
+                row += c;
+            }
+            row+= "\n";
+        }
+        builder.setDescription(row);
 
+        return builder;
+    }
+     private void sendBoard(MessageReceivedEvent event, String[][] gameBoard){
+         event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), gameBoard).build()).queue(message -> {
+             message.addReaction("1️⃣").queue();
+             message.addReaction("2️⃣").queue();
+             message.addReaction("3️⃣").queue();
+             message.addReaction("4️⃣").queue();
+             message.addReaction("5️⃣").queue();
+             message.addReaction("6️⃣").queue();
+             message.addReaction("7️⃣").queue();
+         });
+     }
+    //igakord kui keegi serverisse kirjutab siis see klass registeerib selle
+    @Override
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        String[][] gameBoard = createGameBoard();
+
+        String e = event.getMessage().getContentRaw();
+        String[] args = e.split(" ");
+
+            //event.getChannel().sendMessage("Olen mia bot").queue();
+
+            //üks versioon küsi kumb parem välja näeb
+            //printGameBoard(gameBoard,event);
+        sendBoard(event,gameBoard);
+
+        jda.removeEventListener(this);
+
+    }
+/**
+ * ------------------------------------------------------
+ */
+/*
     private void printGameBoard(String[][] gameBoard, MessageReceivedEvent event) {
         Message msg = null;
         String row = "";
@@ -98,50 +144,7 @@ public class Connect4 extends ListenerAdapter {
 
     }
 
-    private static EmbedBuilder boardInServer(Guild guild,String[][] gameBoard){
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Color.decode("#f1c232"));
-        builder.setTitle("Connect4 game:");
-
-        String row = "";
-        for (int i = 0; i < gameBoard.length; i++) {
-            for (String c : gameBoard[i]) {
-                row += c;
-            }
-            row+= "\n";
-        }
-        builder.setDescription(row);
-
-        return builder;
-    }
-
-
-
-    //igakord kui keegi serverisse kirjutab siis see klass registeerib selle
-    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        String[][] gameBoard = createGameBoard();
-        String e = event.getMessage().getContentRaw();
-        String[] args = e.split(" ");
-
-            //event.getChannel().sendMessage("Olen mia bot").queue();
-
-            //üks versioon küsi kumb parem välja näeb
-            //printGameBoard(gameBoard,event);
-        event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), gameBoard).build()).queue(message -> {
-                message.addReaction("1️⃣").queue();
-                message.addReaction("2️⃣").queue();
-                message.addReaction("3️⃣").queue();
-                message.addReaction("4️⃣").queue();
-                message.addReaction("5️⃣").queue();
-                message.addReaction("6️⃣").queue();
-                message.addReaction("7️⃣").queue();
-            });
-
-
-
-    }
-
-
+ */
 
 
 }
