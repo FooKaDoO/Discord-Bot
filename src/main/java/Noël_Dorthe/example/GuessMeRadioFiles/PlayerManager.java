@@ -10,7 +10,9 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PlayerManager {
@@ -44,18 +46,24 @@ public class PlayerManager {
             @Override
             public void trackLoaded(AudioTrack track) {
                 musicManager.scheduler.queue(track);
-
-                channel.sendMessage("Adding to queue: `")
+                channel.sendMessage("Playing a mystery song. Try to guess it!").queue();
+                /*channel.sendMessage("Adding to queue: `")
                         .append(track.getInfo().title)
                         .append("` by `")
                         .append(track.getInfo().author)
                         .append('`')
-                        .queue();
+                        .queue();*/
             }
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
-                //
+                List<AudioTrack> tracks = playlist.getTracks();
+                channel.sendMessage("Playing from playlist: " + playlist.getName()).queue();
+                channel.sendMessage("Playing a mystery song. Try to guess it!").queue();
+                Collections.shuffle(tracks);
+                for (AudioTrack track : tracks) {
+                    musicManager.scheduler.queue(track);
+                }
             }
 
             @Override
