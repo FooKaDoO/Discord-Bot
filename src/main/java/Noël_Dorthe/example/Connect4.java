@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.react.GenericMessageReactionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.entities.Message;
 import org.jetbrains.annotations.NotNull;
@@ -13,6 +14,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 
 public class Connect4 extends ListenerAdapter {
@@ -23,6 +25,8 @@ public class Connect4 extends ListenerAdapter {
     public final String prefix = "-";
     private String[][] board = new String[6][7];
     private boolean gameOver = false;
+
+    private int count  = 0;
 
     private  String white ="⚪";
     private String yellow = "🟡";
@@ -102,6 +106,77 @@ public class Connect4 extends ListenerAdapter {
              message.addReaction("7️⃣").queue();
          });
      }
+
+     //soruce:https://github.com/JasonDykstra/Discord-Bot
+    public String checkWinner() {
+
+        //Check for horizontal win
+        for(int i = 0; i < 6; i++) {
+            for(int j = 0; j < 7; j += 2) {
+                if((!board[i][j+1].equals(white))
+                        && (!board[i][j+3].equals(white))
+                        && (!board[i][j+5].equals(white))
+                        && (!board[i][j+7].equals(white))
+                        && ((board[i][j+1] == board[i][j+3])
+                        && (board[i][j+3] == board[i][j+5])
+                        && (board[i][j+5] == board[i][j+7]))) {
+                    return board[i][j+1];
+                }
+            }
+        }
+
+        //Check for vertical win
+        for(int i = 1; i < 15; i += 2) {
+            for(int j = 0; j < 3; j++) {
+                if((!board[j][i].equals(white))
+                        && (!board[j+1][i].equals(white))
+                        && (!board[j+2][i].equals(white))
+                        && (!board[j+3][i].equals(white))
+                        && ((board[j][i] == board[j+1][i])
+                        && (board[j+1][i] == board[j+2][i])
+                        && (board[j+2][i] == board[j+3][i]))) {
+                    return board[j][i];
+                }
+            }
+        }
+
+        //Check for \ diagonal win
+        for(int i = 0; i < 4; i++) {
+            for(int j = 1; j < 9; j += 2) {
+                if((!board[i][j].equals(white))
+                        && (!board[i+1][j+2].equals(white))
+                        && (!board[i+2][j+4].equals(white))
+                        && (!board[i+3][j+6] .equals(white))
+                        && ((board[i][j] == board[i+1][j+2])
+                        && (board[i+1][j+2] == board[i+2][j+4])
+                        && (board[i+2][j+4] == board[i+3][j+6])))
+                    return board[i][j];
+
+            }
+        }
+
+        //Check for / diagonal win
+        for(int i = 0; i < 4; i++) {
+            for(int j = 7; j < 15; j += 2) {
+                if((!board[i][j].equals(white))
+                        && (!board[i+1][j-2].equals(white))
+                        && (!board[i+2][j-4].equals(white))
+                        && (!board[i+3][j-6].equals(white))
+                        && ((board[i][j] == board[i+1][j-2])
+                        && (board[i+1][j-2] == board[i+2][j-4])
+                        && (board[i+2][j-4] == board[i+3][j-6])))
+                    return board[i][j];
+            }
+        }
+
+        //if no winner is found:
+        return null;
+
+    }
+
+
+
+
     //igakord kui keegi serverisse kirjutab siis see klass registeerib selle
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
@@ -111,10 +186,27 @@ public class Connect4 extends ListenerAdapter {
         String[] args = e.split(" ");
 
         sendBoard(event,gameBoard);
+        if(count==0)
+        {
+            System.out.println("nii");
+            jda.addEventListener(new onReactionMessageReceieved());
+            System.out.println("siiia");
+        }
 
         jda.removeEventListener(this);
 
     }
+    public void onReceieved(@NotNull GenericMessageReactionEvent event) {
+        switch (event.getReactionEmote().getEmoji()) {
+            case "1️⃣":
+                event.getChannel().sendMessage("Tuvastasin 1");
+                System.out.println("jõudis siia");
+                break;
+        }
+    }
+}
+
+
 /**
  * ------------------------------------------------------
  */
@@ -142,4 +234,4 @@ public class Connect4 extends ListenerAdapter {
  */
 
 
-}
+
