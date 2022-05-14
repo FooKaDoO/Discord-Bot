@@ -4,6 +4,9 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 
 
 import javax.security.auth.login.LoginException;
@@ -11,7 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Main {
+public class Main extends ListenerAdapter {
     /**
      * Main method which starts the bot and adds command listeners. This is what is supposed to be run.
      *
@@ -33,6 +36,18 @@ public class Main {
 
         jda.addEventListener(new EventJoin());
         // The base commands listener.
+        jda.addEventListener(new Main());
         jda.addEventListener(new Commands(jda));
     }
+
+@Override
+   public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event){
+    System.out.println(event.getReactionEmote().getEmoji());
+    if(event.getReactionEmote().getEmoji().equals("1️⃣")){
+
+        System.out.println( event.getMember());
+        System.out.println("sai kätte");}
+
+   }
+
 }

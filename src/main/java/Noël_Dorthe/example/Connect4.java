@@ -186,24 +186,10 @@ public class Connect4 extends ListenerAdapter {
         String[] args = e.split(" ");
 
         sendBoard(event,gameBoard);
-        if(count==0)
-        {
-            System.out.println("nii");
-            jda.addEventListener(new onReactionMessageReceieved());
-            System.out.println("siiia");
-        }
-
         jda.removeEventListener(this);
 
     }
-    public void onReceieved(@NotNull GenericMessageReactionEvent event) {
-        switch (event.getReactionEmote().getEmoji()) {
-            case "1️⃣":
-                event.getChannel().sendMessage("Tuvastasin 1");
-                System.out.println("jõudis siia");
-                break;
-        }
-    }
+
 }
 
 
