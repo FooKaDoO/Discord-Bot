@@ -48,7 +48,11 @@ public class Commands extends ListenerAdapter {
                 GuessMeRadioRules(event); // TODO: Oma reeglid.
             }
             else if (args[1].equalsIgnoreCase("start")) {
-                GuessMeRadioGame(event);
+                try {
+                    GuessMeRadioGame(event);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
         else if (args[0].equalsIgnoreCase(prefix+"maif")) {
@@ -126,19 +130,31 @@ public class Commands extends ListenerAdapter {
      */
     private void GuessMeRadioRules(MessageReceivedEvent event) {
         event.getAuthor().openPrivateChannel().flatMap(channel -> channel.sendMessage(
-                "I will play you a serie of songs and you will have to guess the names of them. " +
-                        "If you want to guess the name of the song make sure to add '?' in front of Your guess."
+                "\n"+
+                        "I am GuessMeRadio, a music bot with an integrated game function that has you guessing the names of the songs from your favourite playlist! \n" +
+                        "\n"+
+                        "To launch me, type '-GuessMeRadio start <link>' into the chat with a link of the playlist/song that you want to play. \n"+
+                        "After that music starts playing! \n"+
+                        "\n"+
+                        "If you would also like to use the gaming function, then here are the commands that I understand: \n" +
+                        "1) '-GuessMeRadio guess <guess>'. This is to guess the name of the song. I will also give you feedback on your answer :)\n" +
+                        "2) '-GuessMeRadio stop'. Pretty self-explanatory. You stop the playing track.\n"+
+                        "3) '-GuessMeRadio resume'. This is to resume the track that you previously stopped.\n"+
+                        "4) '-GuessMeRadio play <link>'. This is in case you have had enough of the old playlist/song and want to play a new one.\n"+
+                        "5) '-GuessMeRadio skip'. When you don't know or like the song, you can always skip it!\n"+
+                        "6) '-GuessMeRadio leave'. Command in case you want to stop the music (and the game).\n"+
+                        "\n"+
+                        "Hope we are gonna have a great time together! :)"
         )).queue();
         event.getChannel().sendMessage("I sent the rules to you in your private messages.").queue();
     }
 
-    private void GuessMeRadioGame(MessageReceivedEvent event){
-        List<User> mangijad = new ArrayList<>();
-        mangijad.add(event.getAuthor());
-        mangijad.addAll(event.getMessage().getMentionedUsers());
-        event.getChannel().sendMessage("New GuessMeRadio game initiated!").queue();
-        jda.addEventListener(new GuessMeRadio(mangijad,jda));
+    private void GuessMeRadioGame(MessageReceivedEvent event) throws InterruptedException {
+        GuessMeRadio GMR = new GuessMeRadio(jda);
+        String[] args=event.getMessage().getContentRaw().split(" ", 3);
+        if (GMR.musicGuessing(event, args)) {
+            event.getChannel().sendMessage("New GuessMeRadio game initiated!").queue();
+            jda.addEventListener(GMR);
+        }
     }
-
-
 }
