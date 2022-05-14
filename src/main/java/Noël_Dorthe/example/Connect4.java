@@ -68,10 +68,7 @@ public class Connect4 extends ListenerAdapter {
                 board[i][index] = red;//see vigane
                 break;
             }
-
-
         }
-
         return board;
     }
 
@@ -92,6 +89,8 @@ public class Connect4 extends ListenerAdapter {
 
         return builder;
     }
+
+
      private void sendBoard(MessageReceivedEvent event, String[][] gameBoard){
          event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), gameBoard).build()).queue(message -> {
              message.addReaction("1️⃣").queue();
@@ -111,10 +110,6 @@ public class Connect4 extends ListenerAdapter {
         String e = event.getMessage().getContentRaw();
         String[] args = e.split(" ");
 
-            //event.getChannel().sendMessage("Olen mia bot").queue();
-
-            //üks versioon küsi kumb parem välja näeb
-            //printGameBoard(gameBoard,event);
         sendBoard(event,gameBoard);
 
         jda.removeEventListener(this);
