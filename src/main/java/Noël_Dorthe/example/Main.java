@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class Main extends ListenerAdapter {
+public class Main extends  ListenerAdapter{
     /**
      * Main method which starts the bot and adds command listeners. This is what is supposed to be run.
      *
@@ -40,14 +40,6 @@ public class Main extends ListenerAdapter {
         jda.addEventListener(new Commands(jda));
     }
 
-@Override
-   public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event){
-    System.out.println(event.getReactionEmote().getEmoji());
-    if(event.getReactionEmote().getEmoji().equals("1️⃣")){
 
-        System.out.println( event.getMember());
-        System.out.println("sai kätte");}
-
-   }
 
 }

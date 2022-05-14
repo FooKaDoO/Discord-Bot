@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.GenericMessageReactionEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.entities.Message;
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +27,9 @@ public class Connect4 extends ListenerAdapter {
     private String[][] board = new String[6][7];
     private boolean gameOver = false;
 
-    private int count  = 0;
+    private int count;
+    private int index;
+    private int player = 0;
 
     private  String white ="⚪";
     private String yellow = "🟡";
@@ -62,7 +65,7 @@ public class Connect4 extends ListenerAdapter {
      * @return filled board
      */
 
-    private String[][] createGameBoardAddColor(String[][] board, MessageReceivedEvent event, int index,int player) { // there should also be which player reacted, and then the color
+    private String[][] createGameBoardAddColor(String[][] board, int index,int player) { // there should also be which player reacted, and then the color
         for (int i = board.length-1; i >= 0 ; i--) {
             if(board[i][index]==(white)){
                 if(player==1){
@@ -180,44 +183,50 @@ public class Connect4 extends ListenerAdapter {
     //igakord kui keegi serverisse kirjutab siis see klass registeerib selle
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        String[][] gameBoard = createGameBoard();
 
-        String e = event.getMessage().getContentRaw();
-        String[] args = e.split(" ");
 
-        sendBoard(event,gameBoard);
+
+        if(count==2){
+            count = 2;
+            sendBoard(event,board);
+            count +=1;
+        }
+       if(count==0) {board = createGameBoard();
+            sendBoard(event,board);
+            count +=1;}
+        if(!checkWinner().equals(null))
         jda.removeEventListener(this);
 
     }
+    @Override
+    public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event){
+        if(event.getMember().getId().equals("882913776108699658")){
+        if(event.getReactionEmote().getEmoji().equals("1️⃣")){
+            System.out.println( event.getMember());
+            board = createGameBoardAddColor(board,0,player);
+            count +=1;
+            System.out.println(Arrays.toString(board));
+        }
+        else if(event.getReactionEmote().getEmoji().equals("2️⃣")){
+                System.out.println( event.getMember());}
+        else if(event.getReactionEmote().getEmoji().equals("3️⃣")){
+            System.out.println( event.getMember());}
+        else if(event.getReactionEmote().getEmoji().equals("4️⃣")){
+            System.out.println( event.getMember());}
+        else if(event.getReactionEmote().getEmoji().equals("5️⃣")){
+            System.out.println( event.getMember());}
+        else if(event.getReactionEmote().getEmoji().equals("6️⃣")){
+            System.out.println( event.getMember());}
+        else if(event.getReactionEmote().getEmoji().equals("7️⃣")){
+            System.out.println( event.getMember());
+        System.out.println("lõppp");}
+        }
 
+
+    }
 }
 
 
-/**
- * ------------------------------------------------------
- */
-/*
-    private void printGameBoard(String[][] gameBoard, MessageReceivedEvent event) {
-        Message msg = null;
-        String row = "";
-        for (int i = 0; i < gameBoard.length; i++) {
-            for (String c : gameBoard[i]) {
-                row += c;
-            }
-            msg = event.getChannel().sendMessage(row).complete();
-            row ="";
-        }
-        msg.addReaction("1️⃣").queue();
-        msg.addReaction("2️⃣").queue();
-        msg.addReaction("3️⃣").queue();
-        msg.addReaction("4️⃣").queue();
-        msg.addReaction("5️⃣").queue();
-        msg.addReaction("6️⃣").queue();
-        msg.addReaction("7️⃣").queue();
-
-    }
-
- */
 
 
 
