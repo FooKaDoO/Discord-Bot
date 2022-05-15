@@ -48,10 +48,10 @@ public class Connect4 extends ListenerAdapter {
     /**
      *Makes the orginal all white gameboard
      */
-    private String[][] createGameBoard() {
+    private String[][] createGameBoard(String color) {
         //String[][] board = new char[6][7];
         for (String[] row : board) {
-            Arrays.fill(row,white);
+            Arrays.fill(row,color);
         }
         return board;
     }
@@ -115,23 +115,23 @@ public class Connect4 extends ListenerAdapter {
 
      //soruce:https://github.com/JasonDykstra/Discord-Bot
     public String checkWinner() {
-        //Check for horizontal win
         for(int i = 0; i < 6; i++) {
-            for(int j = 0; j < 7; j += 2) {
-                if((!board[i][j+1].equals(white))
+            for(int j = 0; j < 4; j ++) {
+                if((!board[i][j].equals(white))
+                        && (!board[i][j+1].equals(white))
+                        && (!board[i][j+2].equals(white))
                         && (!board[i][j+3].equals(white))
-                        && (!board[i][j+5].equals(white))
-                        && (!board[i][j+7].equals(white))
-                        && ((board[i][j+1] == board[i][j+3])
-                        && (board[i][j+3] == board[i][j+5])
-                        && (board[i][j+5] == board[i][j+7]))) {
-                    return board[i][j+1];
+                        && ((board[i][j] == board[i][j+1])
+                        && (board[i][j+1] == board[i][j+2])
+                        && (board[i][j+2] == board[i][j+3]))) {
+                    return board[i][j];
+
                 }
             }
         }
 
         //Check for vertical win
-        for(int i = 1; i < 15; i += 2) {
+        for(int i = 0; i < 7; i++) {
             for(int j = 0; j < 3; j++) {
                 if((!board[j][i].equals(white))
                         && (!board[j+1][i].equals(white))
@@ -147,36 +147,36 @@ public class Connect4 extends ListenerAdapter {
 
         //Check for \ diagonal win
         for(int i = 0; i < 4; i++) {
-            for(int j = 1; j < 9; j += 2) {
+            for(int j = 0; j < 4; j++) {
                 if((!board[i][j].equals(white))
-                        && (!board[i+1][j+2].equals(white))
-                        && (!board[i+2][j+4].equals(white))
-                        && (!board[i+3][j+6] .equals(white))
-                        && ((board[i][j] == board[i+1][j+2])
-                        && (board[i+1][j+2] == board[i+2][j+4])
-                        && (board[i+2][j+4] == board[i+3][j+6])))
+                        && (!board[i+1][j+1].equals(white))
+                        && (!board[i+2][j+2].equals(white))
+                        && (!board[i+3][j+3].equals(white))
+                        && ((board[i][j] == board[i+1][j+1])
+                        && (board[i+1][j+1] == board[i+2][j+2])
+                        && (board[i+2][j+2] == board[i+3][j+3]))) {
                     return board[i][j];
-
+                }
             }
         }
 
         //Check for / diagonal win
-        for(int i = 0; i < 4; i++) {
-            for(int j = 7; j < 15; j += 2) {
+        for(int i = 0; i < 4; i++) {  //was i = 0; i < 3; i++
+            for(int j = 3; j < 7; j++) { //was 3, <7
                 if((!board[i][j].equals(white))
-                        && (!board[i+1][j-2].equals(white))
-                        && (!board[i+2][j-4].equals(white))
-                        && (!board[i+3][j-6].equals(white))
-                        && ((board[i][j] == board[i+1][j-2])
-                        && (board[i+1][j-2] == board[i+2][j-4])
-                        && (board[i+2][j-4] == board[i+3][j-6])))
+                        && (!board[i+1][j-1].equals(white))
+                        && (!board[i+2][j-2].equals(white))
+                        && (!board[i+3][j-3].equals(white))
+                        && ((board[i][j] == board[i+1][j-1])
+                        && (board[i+1][j-1] == board[i+2][j+2])
+                        && (board[i+2][j-2] == board[i+3][j+3]))) {
                     return board[i][j];
+                }
             }
         }
 
-        //if no winner is found:
+        //If no winner is found:
         return null;
-
     }
 
 
@@ -185,7 +185,7 @@ public class Connect4 extends ListenerAdapter {
     //igakord kui keegi serverisse kirjutab siis see klass registeerib selle
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if(count==0) {board = createGameBoard();
+        if(count==0) {board = createGameBoard(white);
             sendBoard(event,board);
             count +=1;}
         if(count==2){
@@ -196,7 +196,11 @@ public class Connect4 extends ListenerAdapter {
         }
         if(checkWinner().equals(red)){
             System.out.println("lõpp");
+            board = createGameBoard(red);
+            event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), board).build()).queue(message -> {
+            });
             jda.removeEventListener(this);}
+
 
     }
     @Override
