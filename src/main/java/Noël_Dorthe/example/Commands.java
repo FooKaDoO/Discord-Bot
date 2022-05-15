@@ -36,12 +36,15 @@ public class Commands extends ListenerAdapter {
                     "-mia").queue();
         }
         // TODO: Tehke event listenerid nagu mina. Vaadake mu YahtzeeListeneri.
-        else if (args[0].equalsIgnoreCase(prefix+"connect4")) {
+        else if (args[0].equalsIgnoreCase(prefix+"c")) {
             if (args.length < 2) {
                 connect4Rules(event); // TODO: Oma reeglid.
             }
-            else if (args[1].equalsIgnoreCase("play")) {
-                connect4Game(event);
+            else if (args[1].equalsIgnoreCase("s")) {
+                connect4Game(event,0);
+            }
+            else if (args[1].equalsIgnoreCase("p")) {
+                connect4Game(event,2);
             }
         }
         // TODO: Tehke event listenerid nagu mina. Vaadake mu YahtzeeListeneri.
@@ -117,12 +120,13 @@ public class Commands extends ListenerAdapter {
         )).queue();
         event.getChannel().sendMessage("I sent the rules to you in your private messages.").queue();
     }
-    private void connect4Game(MessageReceivedEvent event) {
+    private void connect4Game(MessageReceivedEvent event,int count) {
         List<User> mangijad = new ArrayList<>();
         mangijad.add(event.getAuthor());
         mangijad.addAll(event.getMessage().getMentionedUsers());
         //event.getChannel().sendMessage("New Yahtzee game initiated.").queue();
-        jda.addEventListener(new Connect4(mangijad, jda));
+
+        jda.addEventListener(new Connect4(mangijad, jda,count));
     }
 
     /**

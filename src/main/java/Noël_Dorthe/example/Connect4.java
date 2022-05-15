@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.entities.Message;
 import org.jetbrains.annotations.NotNull;
 
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,8 +39,9 @@ public class Connect4 extends ListenerAdapter {
     //🔴 🔴 '\uD83D\uDD34'
     private JDA jda;
 
-    public Connect4(List<User> mangijad,JDA jda) {
+    public Connect4(List<User> mangijad,JDA jda,int count) {
         this.jda = jda;
+        this.count = count;
 
     } // TODO: Pane 'jda.removeEventListener(this);' sinna kus tahad mängu lõpetada.
 
@@ -72,8 +74,9 @@ public class Connect4 extends ListenerAdapter {
                     board[i][index] = yellow;///char at ei pruugi ka töötada
                     break;
                 }
+                else{
                 board[i][index] = red;//see vigane
-                break;
+                break;}
             }
         }
         return board;
@@ -112,7 +115,6 @@ public class Connect4 extends ListenerAdapter {
 
      //soruce:https://github.com/JasonDykstra/Discord-Bot
     public String checkWinner() {
-
         //Check for horizontal win
         for(int i = 0; i < 6; i++) {
             for(int j = 0; j < 7; j += 2) {
@@ -183,32 +185,35 @@ public class Connect4 extends ListenerAdapter {
     //igakord kui keegi serverisse kirjutab siis see klass registeerib selle
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-
-
-
-        if(count==2){
-            count = 2;
-            sendBoard(event,board);
-            count +=1;
-        }
-       if(count==0) {board = createGameBoard();
+        if(count==0) {board = createGameBoard();
             sendBoard(event,board);
             count +=1;}
-        if(!checkWinner().equals(null))
-        jda.removeEventListener(this);
+        if(count==2){
+            board = Connect4help.getBoard();
+            sendBoard(event,board);
+
+            count +=1;
+        }
+        if(checkWinner().equals(red)){
+            System.out.println("lõpp");
+            jda.removeEventListener(this);}
 
     }
     @Override
     public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event){
         if(event.getMember().getId().equals("882913776108699658")){
         if(event.getReactionEmote().getEmoji().equals("1️⃣")){
-            System.out.println( event.getMember());
+            if(count==1)
             board = createGameBoardAddColor(board,0,player);
-            count +=1;
-            System.out.println(Arrays.toString(board));
+            new Connect4help(board);
+            if(checkWinner().equals(red)){
+                System.out.println("lõpp");
+                jda.removeEventListener(this);}
         }
         else if(event.getReactionEmote().getEmoji().equals("2️⃣")){
-                System.out.println( event.getMember());}
+            if(count==1)
+                board = createGameBoardAddColor(board,1,player);
+            new Connect4help(board);}
         else if(event.getReactionEmote().getEmoji().equals("3️⃣")){
             System.out.println( event.getMember());}
         else if(event.getReactionEmote().getEmoji().equals("4️⃣")){
@@ -221,9 +226,8 @@ public class Connect4 extends ListenerAdapter {
             System.out.println( event.getMember());
         System.out.println("lõppp");}
         }
-
-
     }
+
 }
 
 
