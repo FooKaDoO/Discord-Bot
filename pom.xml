@@ -130,5 +130,10 @@
             <artifactId>discord4j-core</artifactId>
             <version>3.2.2</version>
         </dependency>
+        <dependency>
+            <groupId>ee.ut.oop</groupId>
+            <artifactId>discordbot</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>
