@@ -10,6 +10,7 @@ public class Connect4help{
     private static String player1;
     private static String player2;
     private static int turns;
+    private boolean gameOver;
 
     public Connect4help(String[][] board) {
         this.board = board;

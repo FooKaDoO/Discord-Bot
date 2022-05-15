@@ -26,7 +26,7 @@ public class Connect4 extends ListenerAdapter {
 
     public final String prefix = "-";
     private String[][] board = new String[6][7];
-    private boolean gameOver = false;
+    private boolean gameOver;
 
     private int count;
     private int index;
@@ -196,9 +196,13 @@ public class Connect4 extends ListenerAdapter {
         }
         if(checkWinner().equals(red)){
             board = createGameBoard(red);
-            event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), board).build()).queue(message -> {
-            });
+            event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), board).build()).queue();
             jda.removeEventListener(this);}
+        if(checkWinner().equals(yellow)){
+            board = createGameBoard(yellow);
+            event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), board).build()).queue();
+            jda.removeEventListener(this);
+        }
 
 
     }
