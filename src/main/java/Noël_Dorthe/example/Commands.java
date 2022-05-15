@@ -116,7 +116,13 @@ public class Commands extends ListenerAdapter {
      */
     private void connect4Rules(MessageReceivedEvent event) {
         event.getAuthor().openPrivateChannel().flatMap(channel -> channel.sendMessage(
-                " connect4Rules "
+                " connect4Rules:\n " +
+                        "Connect4 is usally played by two players.\n" +
+                        "In oder to win you have to get 4 same color:diagonal win,vertical win,horizontal win\n "+
+                        "Some commands{\n Starts new came :-connect4 new @Other player/or blank\n"+
+                        "next move: -connect4 next\n}" + "In oder to choose where the ball will fall" +
+                        " select the appropriate column number and then use NEXT COMMAND (-connect4 next)"
+
         )).queue();
         event.getChannel().sendMessage("I sent the rules to you in your private messages.").queue();
     }
@@ -137,7 +143,7 @@ public class Commands extends ListenerAdapter {
             event.getChannel().sendMessage("\uD83D\uDD34 - turn").queue();
         else if (Connect4help.getTurns()==1)
             event.getChannel().sendMessage("🟡- turn").queue();
-        jda.addEventListener(new Connect4(mangijad, jda,count));
+        jda.addEventListener(new Connect4( jda,count));
     }
 
     /**

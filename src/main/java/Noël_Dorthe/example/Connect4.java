@@ -20,11 +20,6 @@ import java.util.Locale;
 
 
 public class Connect4 extends ListenerAdapter {
-    private List<User> mangijad = new ArrayList<>();
-
-
-
-    public final String prefix = "-";
     private String[][] board = new String[6][7];
     private boolean gameOver;
 
@@ -34,19 +29,19 @@ public class Connect4 extends ListenerAdapter {
 
     private  String white ="⚪";
     private String yellow = "🟡";
-    private String red = "\uD83D\uDD34";//ei tea kas see töötab??
-    //private Emoji white = Emoji.fromUnicode("U+26AA");
-    //🔴 🔴 '\uD83D\uDD34'
+    private String red = "\uD83D\uDD34";
+
     private JDA jda;
 
-    public Connect4(List<User> mangijad,JDA jda,int count) {
+
+    public Connect4(JDA jda,int count) {
         this.jda = jda;
         this.count = count;
 
-    } // TODO: Pane 'jda.removeEventListener(this);' sinna kus tahad mängu lõpetada.
+    }
 
     /**
-     *Makes the orginal all white gameboard
+     *Makes the orginal all same color gameboard
      */
     private String[][] createGameBoard(String color) {
         //String[][] board = new char[6][7];
@@ -61,10 +56,7 @@ public class Connect4 extends ListenerAdapter {
      *
      * takes previous board and adds a color
      *
-     * @param board
-     * @param event
-     * @param person
-     * @return filled board
+     * @return filled board with right color at index
      */
 
     private String[][] createGameBoardAddColor(String[][] board, int index) { // there should also be which player reacted, and then the color
@@ -82,6 +74,12 @@ public class Connect4 extends ListenerAdapter {
         return board;
     }
 
+    /**
+     *  boardInServer
+     *
+     *  puts together correct Embed
+     *
+     */
 
     private static EmbedBuilder boardInServer(Guild guild,String[][] gameBoard){
         EmbedBuilder builder = new EmbedBuilder();
@@ -100,6 +98,11 @@ public class Connect4 extends ListenerAdapter {
         return builder;
     }
 
+    /**
+     *  sendBoard
+     *
+     *  adds reactions and sent to channle
+     */
 
      private void sendBoard(MessageReceivedEvent event, String[][] gameBoard){
          event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), gameBoard).build()).queue(message -> {
@@ -113,7 +116,12 @@ public class Connect4 extends ListenerAdapter {
          });
      }
 
-     //soruce:https://github.com/JasonDykstra/Discord-Bot
+    /**
+     *  checkWinner
+     *
+     *soruce:https://github.com/JasonDykstra/Discord-Bot
+
+     */
     public String checkWinner() {
         for(int i = 0; i < 6; i++) {
             for(int j = 0; j < 4; j ++) {
@@ -180,37 +188,50 @@ public class Connect4 extends ListenerAdapter {
     }
 
 
+/**
+ * Like a Main class in this fail
+ *
+ * if game starts then count is 0 and starts with all white board
+ *
+ * mid-game is count 2, in order to not go to endless cycle
+ *
+ * if win
+ */
 
-
-    //igakord kui keegi serverisse kirjutab siis see klass registeerib selle
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if(count==0) {board = createGameBoard(white);
             sendBoard(event,board);
             count +=1;}
-        if(count==2){
+       else if(count==2){
             board = Connect4help.getBoard();
             sendBoard(event,board);
 
             count +=1;
 
         }
-        if(checkWinner().equals(red)){
+       else if(checkWinner().equals(red)){
             board = createGameBoard(red);
             event.getChannel().sendMessage("YOU WON!").queue();
             event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), board).build()).queue();
             jda.removeEventListener(this);}
-        if(checkWinner().equals(yellow)){
+        else if(checkWinner().equals(yellow)){
             board = createGameBoard(yellow);
             event.getChannel().sendMessage("YOU WON!").queue();
             event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), board).build()).queue();
             jda.removeEventListener(this);
         }
+        else  jda.removeEventListener(this);
 
 
     }
+
+    /**
+     * gets reactions and saves game board
+     */
     @Override
     public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event){
+
         if(event.getMember().getId().equals(Connect4help.getPlayer())){
         if(event.getReactionEmote().getEmoji().equals("1️⃣")){
             if(count==1)

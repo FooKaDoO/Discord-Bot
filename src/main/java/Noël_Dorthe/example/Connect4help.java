@@ -16,6 +16,10 @@ public class Connect4help{
         this.board = board;
     }
 
+
+    /**
+     * if one player then turns don't change
+     */
     public static String[][] getBoard() {
         if(turns==0&&!player2.equals("--"))Connect4help.setTurns(1);
         else Connect4help.setTurns(0);
@@ -41,6 +45,8 @@ public class Connect4help{
     public static String getPlayer1() {
         return player1;
     }
+
+
     public static String getPlayer() {
         if(player2.equals("--")) return player1;
         else if(turns==0)return  player1;
