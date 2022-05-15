@@ -215,16 +215,25 @@ public class Connect4 extends ListenerAdapter {
                 board = createGameBoardAddColor(board,1,player);
             new Connect4help(board);}
         else if(event.getReactionEmote().getEmoji().equals("3️⃣")){
-            System.out.println( event.getMember());}
+            if(count==1)
+                board = createGameBoardAddColor(board,2,player);
+            new Connect4help(board);}
         else if(event.getReactionEmote().getEmoji().equals("4️⃣")){
-            System.out.println( event.getMember());}
+            if(count==1)
+                board = createGameBoardAddColor(board,3,player);
+            new Connect4help(board);}
         else if(event.getReactionEmote().getEmoji().equals("5️⃣")){
-            System.out.println( event.getMember());}
+            if(count==1)
+                board = createGameBoardAddColor(board,4,player);
+            new Connect4help(board);}
         else if(event.getReactionEmote().getEmoji().equals("6️⃣")){
-            System.out.println( event.getMember());}
+            if(count==1)
+                board = createGameBoardAddColor(board,5,player);
+            new Connect4help(board);}
         else if(event.getReactionEmote().getEmoji().equals("7️⃣")){
-            System.out.println( event.getMember());
-        System.out.println("lõppp");}
+            if(count==1)
+                board = createGameBoardAddColor(board,0,player);
+            new Connect4help(board);}
         }
     }
 
