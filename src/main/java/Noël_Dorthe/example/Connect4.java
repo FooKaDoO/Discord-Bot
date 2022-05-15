@@ -193,13 +193,16 @@ public class Connect4 extends ListenerAdapter {
             sendBoard(event,board);
 
             count +=1;
+
         }
         if(checkWinner().equals(red)){
             board = createGameBoard(red);
+            event.getChannel().sendMessage("YOU WON!").queue();
             event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), board).build()).queue();
             jda.removeEventListener(this);}
         if(checkWinner().equals(yellow)){
             board = createGameBoard(yellow);
+            event.getChannel().sendMessage("YOU WON!").queue();
             event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), board).build()).queue();
             jda.removeEventListener(this);
         }

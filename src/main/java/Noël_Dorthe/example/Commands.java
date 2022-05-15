@@ -35,15 +35,15 @@ public class Commands extends ListenerAdapter {
                     "-maif\n" +
                     "-mia").queue();
         }
-        // TODO: Tehke event listenerid nagu mina. Vaadake mu YahtzeeListeneri.
-        else if (args[0].equalsIgnoreCase(prefix+"c")) {
+
+        else if (args[0].equalsIgnoreCase(prefix+"connect4")) {
             if (args.length < 2) {
                 connect4Rules(event); // TODO: Oma reeglid.
             }
-            else if (args[1].equalsIgnoreCase("s")) {
+            else if (args[1].equalsIgnoreCase("new")) {
                 connect4Game(event,0);
             }
-            else if (args[1].equalsIgnoreCase("p")) {
+            else if (args[1].equalsIgnoreCase("next")) {
                 connect4Game(event,2);
             }
         }
@@ -132,9 +132,11 @@ public class Commands extends ListenerAdapter {
             else {event.getChannel().sendMessage("Playing alone or with too many members").queue();
                 Connect4help.setPlayer2("--");
             }
-
         }
-
+        if(Connect4help.getTurns()==0)
+            event.getChannel().sendMessage("\uD83D\uDD34 - turn").queue();
+        else if (Connect4help.getTurns()==1)
+            event.getChannel().sendMessage("🟡- turn").queue();
         jda.addEventListener(new Connect4(mangijad, jda,count));
     }
 
