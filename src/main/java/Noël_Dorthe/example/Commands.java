@@ -119,8 +119,8 @@ public class Commands extends ListenerAdapter {
                 " connect4Rules:\n " +
                         "Connect4 is usally played by two players.\n" +
                         "In oder to win you have to get 4 same color:diagonal win,vertical win,horizontal win\n "+
-                        "Some commands{\n Starts new came :-connect4 new @Other player/or blank\n"+
-                        "next move: -connect4 next\n}" + "In oder to choose where the ball will fall" +
+                        "Some commands{" +"\n" +"Starts new came :-connect4 new @Other player/or blank\n"+
+                        "next move: -connect4 next}\n" + "In oder to choose where the ball will fall" +
                         " select the appropriate column number and then use NEXT COMMAND (-connect4 next)"
 
         )).queue();
