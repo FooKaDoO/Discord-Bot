@@ -38,7 +38,7 @@ public class Commands extends ListenerAdapter {
 
         else if (args[0].equalsIgnoreCase(prefix+"connect4")) {
             if (args.length < 2) {
-                connect4Rules(event); // TODO: Oma reeglid.
+                connect4Rules(event);
             }
             else if (args[1].equalsIgnoreCase("new")) {
                 connect4Game(event,0);
@@ -47,10 +47,10 @@ public class Commands extends ListenerAdapter {
                 connect4Game(event,2);
             }
         }
-        // TODO: Tehke event listenerid nagu mina. Vaadake mu YahtzeeListeneri.
+
         else if (args[0].equalsIgnoreCase(prefix+"GuessMeRadio")) {
             if (args.length < 2) {
-                GuessMeRadioRules(event); // TODO: Oma reeglid.
+                GuessMeRadioRules(event);
             }
             else if (args[1].equalsIgnoreCase("start")) {
                 try {
