@@ -195,7 +195,6 @@ public class Connect4 extends ListenerAdapter {
             count +=1;
         }
         if(checkWinner().equals(red)){
-            System.out.println("lõpp");
             board = createGameBoard(red);
             event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), board).build()).queue(message -> {
             });
@@ -210,9 +209,6 @@ public class Connect4 extends ListenerAdapter {
             if(count==1)
             board = createGameBoardAddColor(board,0,player);
             new Connect4help(board);
-            if(checkWinner().equals(red)){
-                System.out.println("lõpp");
-                jda.removeEventListener(this);}
         }
         else if(event.getReactionEmote().getEmoji().equals("2️⃣")){
             if(count==1)
@@ -236,7 +232,7 @@ public class Connect4 extends ListenerAdapter {
             new Connect4help(board);}
         else if(event.getReactionEmote().getEmoji().equals("7️⃣")){
             if(count==1)
-                board = createGameBoardAddColor(board,0,player);
+                board = createGameBoardAddColor(board,6,player);
             new Connect4help(board);}
         }
     }
