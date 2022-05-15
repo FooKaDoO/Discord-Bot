@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public class EventJoin extends ListenerAdapter {
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
+        // This works only with our server, with one channel????
         if(!event.getGuild().getId().equals("959763557854101535"))return;
 
         event.getGuild().getTextChannelById("959763557854101535").sendMessage("Welcome to the server" + event.getMember().getAsMention() +"!").queue();
