@@ -33,7 +33,7 @@ public class Commands extends ListenerAdapter {
             event.getChannel().sendMessage("Try commands:\n" +
                     "-GuessMeRadio\n" +
                     "-maif\n" +
-                    "-mia").queue();
+                    "-connect4").queue();
         }
 
         else if (args[0].equalsIgnoreCase(prefix+"connect4")) {
