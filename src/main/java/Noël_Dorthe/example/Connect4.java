@@ -30,7 +30,7 @@ public class Connect4 extends ListenerAdapter {
 
     private int count;
     private int index;
-    private int player = 0;
+
 
     private  String white ="⚪";
     private String yellow = "🟡";
@@ -67,10 +67,10 @@ public class Connect4 extends ListenerAdapter {
      * @return filled board
      */
 
-    private String[][] createGameBoardAddColor(String[][] board, int index,int player) { // there should also be which player reacted, and then the color
+    private String[][] createGameBoardAddColor(String[][] board, int index) { // there should also be which player reacted, and then the color
         for (int i = board.length-1; i >= 0 ; i--) {
             if(board[i][index]==(white)){
-                if(player==1){
+                if(Connect4help.getTurns()==1){
                     board[i][index] = yellow;///char at ei pruugi ka töötada
                     break;
                 }
@@ -204,35 +204,35 @@ public class Connect4 extends ListenerAdapter {
     }
     @Override
     public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event){
-        if(event.getMember().getId().equals("882913776108699658")){
+        if(event.getMember().getId().equals(Connect4help.getPlayer())){
         if(event.getReactionEmote().getEmoji().equals("1️⃣")){
             if(count==1)
-            board = createGameBoardAddColor(board,0,player);
+            board = createGameBoardAddColor(board,0);
             new Connect4help(board);
         }
         else if(event.getReactionEmote().getEmoji().equals("2️⃣")){
             if(count==1)
-                board = createGameBoardAddColor(board,1,player);
+                board = createGameBoardAddColor(board,1);
             new Connect4help(board);}
         else if(event.getReactionEmote().getEmoji().equals("3️⃣")){
             if(count==1)
-                board = createGameBoardAddColor(board,2,player);
+                board = createGameBoardAddColor(board,2);
             new Connect4help(board);}
         else if(event.getReactionEmote().getEmoji().equals("4️⃣")){
             if(count==1)
-                board = createGameBoardAddColor(board,3,player);
+                board = createGameBoardAddColor(board,3);
             new Connect4help(board);}
         else if(event.getReactionEmote().getEmoji().equals("5️⃣")){
             if(count==1)
-                board = createGameBoardAddColor(board,4,player);
+                board = createGameBoardAddColor(board,4);
             new Connect4help(board);}
         else if(event.getReactionEmote().getEmoji().equals("6️⃣")){
             if(count==1)
-                board = createGameBoardAddColor(board,5,player);
+                board = createGameBoardAddColor(board,5);
             new Connect4help(board);}
         else if(event.getReactionEmote().getEmoji().equals("7️⃣")){
             if(count==1)
-                board = createGameBoardAddColor(board,6,player);
+                board = createGameBoardAddColor(board,6);
             new Connect4help(board);}
         }
     }

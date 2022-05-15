@@ -16,6 +16,8 @@ public class Connect4help{
     }
 
     public static String[][] getBoard() {
+        if(turns==0&&!player2.equals("--"))Connect4help.setTurns(1);
+        else Connect4help.setTurns(0);
         return board;
     }
 
@@ -37,6 +39,11 @@ public class Connect4help{
 
     public static String getPlayer1() {
         return player1;
+    }
+    public static String getPlayer() {
+        if(player2.equals("--")) return player1;
+        else if(turns==0)return  player1;
+        else return  player2;
     }
 
     public static String getPlayer2() {

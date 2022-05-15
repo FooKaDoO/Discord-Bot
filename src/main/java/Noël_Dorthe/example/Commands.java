@@ -125,10 +125,15 @@ public class Commands extends ListenerAdapter {
         mangijad.add(event.getAuthor());
         mangijad.addAll(event.getMessage().getMentionedUsers());
         if(count==0){
+            Connect4help.setTurns(0);
             Connect4help.setPlayer1(mangijad.get(0).getId());
-        System.out.println(mangijad.get(0).getId());
+            if(mangijad.size()==2)
+            Connect4help.setPlayer2(mangijad.get(1).getId());
+            else {event.getChannel().sendMessage("Playing alone or with too many members").queue();
+                Connect4help.setPlayer2("--");
+            }
+
         }
-        //event.getChannel().sendMessage("New Yahtzee game initiated.").queue();
 
         jda.addEventListener(new Connect4(mangijad, jda,count));
     }
