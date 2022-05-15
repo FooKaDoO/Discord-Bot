@@ -3,9 +3,14 @@
 ENG:
 Project idea is to make in java Discord game bot, there will be different level as different type of games.
 
-GAME ONE:
-*
+<h3>GAME ONE: Pseudo Yahtzee</h3>
 creator -- Mihkel Hani 
+<br>
+Practically a Yahtzee game played by a Discord bot.
+<br>
+For more info, run program and write -maif in a channel where the bot is.
+<br>
+
 
 GAME TWO:Connect4
 *
