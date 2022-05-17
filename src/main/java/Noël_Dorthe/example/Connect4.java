@@ -25,6 +25,7 @@ public class Connect4 extends ListenerAdapter {
 
     private int count;
     private int index;
+    private String winner;
 
 
     private  String white ="⚪";
@@ -203,19 +204,20 @@ public class Connect4 extends ListenerAdapter {
         if(count==0) {board = createGameBoard(white);
             sendBoard(event,board);
             count +=1;}
-       else if(count==2){
+        if(count==2){
             board = Connect4help.getBoard();
             sendBoard(event,board);
 
             count +=1;
 
         }
-       else if(checkWinner().equals(red)){
+        winner = checkWinner();
+        if(winner.equals(red)){
             board = createGameBoard(red);
             event.getChannel().sendMessage("YOU WON!").queue();
             event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), board).build()).queue();
             jda.removeEventListener(this);}
-        else if(checkWinner().equals(yellow)){
+         if(winner.equals(yellow)){
             board = createGameBoard(yellow);
             event.getChannel().sendMessage("YOU WON!").queue();
             event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), board).build()).queue();

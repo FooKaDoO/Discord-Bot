@@ -130,20 +130,28 @@ public class Commands extends ListenerAdapter {
         List<User> mangijad = new ArrayList<>();
         mangijad.add(event.getAuthor());
         mangijad.addAll(event.getMessage().getMentionedUsers());
+        System.out.println(mangijad);
         if(count==0){
             Connect4help.setTurns(0);
             Connect4help.setPlayer1(mangijad.get(0).getId());
-            if(mangijad.size()==2)
-            Connect4help.setPlayer2(mangijad.get(1).getId());
+            if(mangijad.size()==2) {
+                Connect4help.setPlayer2(mangijad.get(1).getId());
+                System.out.println(mangijad.get(1).getId());
+            }
             else {event.getChannel().sendMessage("Playing alone or with too many members").queue();
                 Connect4help.setPlayer2("--");
             }
         }
-        if(Connect4help.getTurns()==0)
-            event.getChannel().sendMessage("\uD83D\uDD34 - turn").queue();
-        else if (Connect4help.getTurns()==1)
+
+        if(Connect4help.getTurns()==0&&!Connect4help.getPlayer2().equals("--")&&count!=0){
             event.getChannel().sendMessage("🟡- turn").queue();
+        }
+        if (Connect4help.getTurns()==1||Connect4help.getPlayer2().equals("--")||count==0){
+            event.getChannel().sendMessage("\uD83D\uDD34- turn").queue();}
+        System.out.println(Connect4help.getTurns());
         jda.addEventListener(new Connect4( jda,count));
+
+
     }
 
     /**
