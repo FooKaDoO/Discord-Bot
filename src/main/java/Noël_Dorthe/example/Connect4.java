@@ -149,6 +149,7 @@ public class Connect4 extends ListenerAdapter {
                         && ((board[j][i] == board[j+1][i])
                         && (board[j+1][i] == board[j+2][i])
                         && (board[j+2][i] == board[j+3][i]))) {
+
                     return board[j][i];
                 }
             }
@@ -177,8 +178,9 @@ public class Connect4 extends ListenerAdapter {
                         && (!board[i+2][j-2].equals(white))
                         && (!board[i+3][j-3].equals(white))
                         && ((board[i][j] == board[i+1][j-1])
-                        && (board[i+1][j-1] == board[i+2][j+2])
-                        && (board[i+2][j-2] == board[i+3][j+3]))) {
+                        && (board[i+1][j-1] == board[i+2][j-2])
+                        && (board[i+2][j-2] == board[i+3][j-3]))) {
+                    System.out.println("leidsin siin");
                     return board[i][j];
                 }
             }
@@ -204,20 +206,20 @@ public class Connect4 extends ListenerAdapter {
         if(count==0) {board = createGameBoard(white);
             sendBoard(event,board);
             count +=1;}
-        if(count==2){
+        else if(count==2){
             board = Connect4help.getBoard();
             sendBoard(event,board);
 
             count +=1;
-
+           // winner = checkWinner();
         }
-        winner = checkWinner();
-        if(winner.equals(red)){
+
+       else if(checkWinner().equals(red)){
             board = createGameBoard(red);
             event.getChannel().sendMessage("YOU WON!").queue();
             event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), board).build()).queue();
             jda.removeEventListener(this);}
-         if(winner.equals(yellow)){
+         else if(checkWinner().equals(yellow)){
             board = createGameBoard(yellow);
             event.getChannel().sendMessage("YOU WON!").queue();
             event.getChannel().sendMessageEmbeds(boardInServer(event.getGuild(), board).build()).queue();

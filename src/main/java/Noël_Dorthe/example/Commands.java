@@ -130,7 +130,7 @@ public class Commands extends ListenerAdapter {
         List<User> mangijad = new ArrayList<>();
         mangijad.add(event.getAuthor());
         mangijad.addAll(event.getMessage().getMentionedUsers());
-        System.out.println(mangijad);
+        //System.out.println(mangijad);
         if(count==0){
             Connect4help.setTurns(0);
             Connect4help.setPlayer1(mangijad.get(0).getId());
@@ -148,7 +148,7 @@ public class Commands extends ListenerAdapter {
         }
         if (Connect4help.getTurns()==1||Connect4help.getPlayer2().equals("--")||count==0){
             event.getChannel().sendMessage("\uD83D\uDD34- turn").queue();}
-        System.out.println(Connect4help.getTurns());
+        //System.out.println(Connect4help.getTurns());
         jda.addEventListener(new Connect4( jda,count));
 
 
