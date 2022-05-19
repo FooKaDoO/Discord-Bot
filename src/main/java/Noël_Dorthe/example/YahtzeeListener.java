@@ -138,6 +138,16 @@ public class YahtzeeListener extends ListenerAdapter {
             currentMove++;
             event.getChannel().sendMessage(currentMove + ". käik on läbi").queue();
             event.getChannel().sendMessage("Ootan " + mangijad.get(currentMember).getAsMention() + " käiku").queue();
+            if (currentMove >= 13) {
+                int max = 0;
+                for (int i = 0; i < punktid.size(); i++) {
+                    if (punktid.get(i) > punktid.get(max))
+                        max = i;
+                }
+                event.getChannel().sendMessage("Mäng on läbi, võitja on " + mangijad.get(max).getAsMention() + " " + punktid.get(max) + " punktiga!").queue();
+                // Removes this event listener
+                jda.removeEventListener(this);
+            }
         }
         // In case the max cap of rolls is reached, the rolls will be reset and the turn will be given over to the next player.
         if (currentRoll >= 3) {
@@ -146,6 +156,23 @@ public class YahtzeeListener extends ListenerAdapter {
             event.getChannel().sendMessage(mangijad.get(currentMember).getAsMention() + " on " + punktid.get(currentMember) + " punkti").queue();
             currentMember++;
             event.getChannel().sendMessage("Ootan " + mangijad.get(currentMember).getAsMention() + " käiku").queue();
+
+            if (currentMember >= mangijateArv) {
+                currentMember = 0;
+                currentMove++;
+                event.getChannel().sendMessage(currentMove + ". käik on läbi").queue();
+                event.getChannel().sendMessage("Ootan " + mangijad.get(currentMember).getAsMention() + " käiku").queue();
+                if (currentMove >= 13) {
+                    int max = 0;
+                    for (int i = 0; i < punktid.size(); i++) {
+                        if (punktid.get(i) > punktid.get(max))
+                            max = i;
+                    }
+                    event.getChannel().sendMessage("Mäng on läbi, võitja on " + mangijad.get(max).getAsMention() + " " + punktid.get(max) + " punktiga!").queue();
+                    // Removes this event listener
+                    jda.removeEventListener(this);
+                }
+            }
         }
     }
 
