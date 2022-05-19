@@ -141,6 +141,7 @@ public class YahtzeeListener extends ListenerAdapter {
         }
         // In case the max cap of rolls is reached, the rolls will be reset and the turn will be given over to the next player.
         if (currentRoll >= 3) {
+            stopVeeretamine(event);
             currentRoll = 0;
             event.getChannel().sendMessage(mangijad.get(currentMember).getAsMention() + " on " + punktid.get(currentMember) + " punkti").queue();
             currentMember++;
