@@ -123,57 +123,66 @@ public class YahtzeeListener extends ListenerAdapter {
     public void endCases(MessageReceivedEvent event) {
         // If the 13th move is finished the game ends.
         if (currentMove >= 13) {
-            int max = 0;
-            for (int i = 0; i < punktid.size(); i++) {
-                if (punktid.get(i) > punktid.get(max))
-                    max = i;
-            }
-            event.getChannel().sendMessage("Mäng on läbi, võitja on " + mangijad.get(max).getAsMention() + " " + punktid.get(max) + " punktiga!").queue();
-            // Removes this event listener
-            jda.removeEventListener(this);
+            currentMoveCheck(event);
         }
         // In case the last player is reached, the program goes back to the first player and increments the current move.
         if (currentMember >= mangijateArv) {
-            currentMember = 0;
-            currentMove++;
-            event.getChannel().sendMessage(currentMove + ". käik on läbi").queue();
-            event.getChannel().sendMessage("Ootan " + mangijad.get(currentMember).getAsMention() + " käiku").queue();
-            if (currentMove >= 13) {
-                int max = 0;
-                for (int i = 0; i < punktid.size(); i++) {
-                    if (punktid.get(i) > punktid.get(max))
-                        max = i;
-                }
-                event.getChannel().sendMessage("Mäng on läbi, võitja on " + mangijad.get(max).getAsMention() + " " + punktid.get(max) + " punktiga!").queue();
-                // Removes this event listener
-                jda.removeEventListener(this);
-            }
+            currentMemberCheck(event);
         }
         // In case the max cap of rolls is reached, the rolls will be reset and the turn will be given over to the next player.
         if (currentRoll >= 3) {
-            stopVeeretamine(event);
-            currentRoll = 0;
-            event.getChannel().sendMessage(mangijad.get(currentMember).getAsMention() + " on " + punktid.get(currentMember) + " punkti").queue();
-            currentMember++;
-            event.getChannel().sendMessage("Ootan " + mangijad.get(currentMember).getAsMention() + " käiku").queue();
-
-            if (currentMember >= mangijateArv) {
-                currentMember = 0;
-                currentMove++;
-                event.getChannel().sendMessage(currentMove + ". käik on läbi").queue();
-                event.getChannel().sendMessage("Ootan " + mangijad.get(currentMember).getAsMention() + " käiku").queue();
-                if (currentMove >= 13) {
-                    int max = 0;
-                    for (int i = 0; i < punktid.size(); i++) {
-                        if (punktid.get(i) > punktid.get(max))
-                            max = i;
-                    }
-                    event.getChannel().sendMessage("Mäng on läbi, võitja on " + mangijad.get(max).getAsMention() + " " + punktid.get(max) + " punktiga!").queue();
-                    // Removes this event listener
-                    jda.removeEventListener(this);
-                }
-            }
+            currentRollCheck(event);
         }
+    }
+
+    /**
+     * If current roll is above 3, goes to next member and sets roll to 0.
+     * <br>
+     * If next member is last member, go currentMemberCheck(MessageReceivedEvent event)
+     * @param event
+     */
+    public void currentRollCheck(MessageReceivedEvent event) {
+        stopVeeretamine(event);
+        currentRoll = 0;
+        event.getChannel().sendMessage(mangijad.get(currentMember).getAsMention() + " on " + punktid.get(currentMember) + " punkti").queue();
+        currentMember++;
+        event.getChannel().sendMessage("Ootan " + mangijad.get(currentMember).getAsMention() + " käiku").queue();
+        // Peab uuesti mängijat kontrollima
+        if (currentMember >= mangijateArv) {
+            currentMemberCheck(event);
+        }
+    }
+
+    /**
+     * If current member is last member, go to next move and set member index to 0.
+     * <br>
+     * If next move is last move, go to currentMoveCheck(MessageReceivedEvent event)
+     * @param event
+     */
+    public void currentMemberCheck(MessageReceivedEvent event) {
+        currentMember = 0;
+        currentMove++;
+        event.getChannel().sendMessage(currentMove + ". käik on läbi").queue();
+        event.getChannel().sendMessage("Ootan " + mangijad.get(currentMember).getAsMention() + " käiku").queue();
+        // Peab uuesti käiku kontrollima
+        if (currentMove >= 13) {
+            currentMoveCheck(event);
+        }
+    }
+
+    /**
+     * If last move, display winner, show how many points they had, and remove eventListener from JDA object.
+     * @param event
+     */
+    public void currentMoveCheck(MessageReceivedEvent event) {
+        int max = 0;
+        for (int i = 0; i < punktid.size(); i++) {
+            if (punktid.get(i) > punktid.get(max))
+                max = i;
+        }
+        event.getChannel().sendMessage("Mäng on läbi, võitja on " + mangijad.get(max).getAsMention() + " " + punktid.get(max) + " punktiga!").queue();
+        // Removes this event listener
+        jda.removeEventListener(this);
     }
 
     /**
